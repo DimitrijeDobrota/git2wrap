@@ -1,6 +1,8 @@
 #pragma once
 
 #include <exception>
+#include <functional>
+#include <memory>
 #include <string>
 
 #include <git2.h>
@@ -54,29 +56,30 @@ private:
   int m_cinit = 0;
 };
 
+class GIT2WRAP_EXPORT reference
+{
+public:
+  explicit reference(git_reference* ref = nullptr);
+
+  git_reference* get() const;
+
+private:
+  std::unique_ptr<git_reference, std::function<void(git_reference*)>> m_ref;
+};
+
 class GIT2WRAP_EXPORT branch
 {
 public:
-  branch(git_reference* ref, git_branch_t type);
-  branch() = default;
-
-  branch(const branch&) = delete;
-  branch& operator=(const branch&) = delete;
-
-  branch(branch&& rhs) noexcept;
-  branch& operator=(branch&& rhs) noexcept;
-
-  ~branch();
-
-  git_reference* get_reference() { return m_ref; }
-  const git_reference* get_reference() const { return m_ref; }
+  explicit branch(git_reference* ref = nullptr,
+                  git_branch_t type = git_branch_t(0));
 
   git_branch_t get_type() const { return m_type; }
+  git_reference* get_reference() const { return m_ref.get(); }
 
   const std::string& get_name();
 
 private:
-  git_reference* m_ref = nullptr;
+  reference m_ref;
   git_branch_t m_type = {};
 
   std::string m_name;
@@ -91,12 +94,6 @@ public:
   explicit repository(git_repository* repo);
   repository(const char* path, unsigned is_bare);
   repository(const char* path, init_options* opts);
-  ~repository();
-
-  repository(const repository&) = delete;
-  repository(repository&&) = delete;
-  repository& operator=(const repository&) = delete;
-  repository& operator=(repository&&) = delete;
 
   static repository clone(const char* url,
                           const char* local_path,
@@ -130,9 +127,8 @@ public:
     friend bool operator!=(const branch_iterator& lhs,
                            const branch_iterator& rhs);
 
-    git_branch_iterator* m_iter = nullptr;
-
   private:
+    git_branch_iterator* m_iter = nullptr;
     branch m_branch;
   };
 
@@ -140,7 +136,7 @@ public:
   branch_iterator branch_end() const;
 
 private:
-  git_repository* m_repo = nullptr;
+  std::unique_ptr<git_repository, std::function<void(git_repository*)>> m_repo;
 };
 
 }  // namespace git2wrap

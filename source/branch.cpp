@@ -9,28 +9,6 @@ branch::branch(git_reference* ref, git_branch_t type)
 {
 }
 
-branch::branch(branch&& rhs) noexcept
-{
-  std::swap(m_ref, rhs.m_ref);
-  std::swap(m_type, rhs.m_type);
-  std::swap(m_name, rhs.m_name);
-}
-
-branch& branch::operator=(branch&& rhs) noexcept
-{
-  std::swap(m_ref, rhs.m_ref);
-  std::swap(m_type, rhs.m_type);
-  std::swap(m_name, rhs.m_name);
-
-  return *this;
-}
-
-branch::~branch()
-{
-  git_reference_free(m_ref);
-  m_ref = nullptr;
-}
-
 const std::string& branch::get_name()
 {
   if (!m_name.empty()) {
@@ -38,7 +16,7 @@ const std::string& branch::get_name()
   }
 
   const char* name = nullptr;
-  if (auto err = git_branch_name(&name, m_ref)) {
+  if (auto err = git_branch_name(&name, m_ref.get())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 

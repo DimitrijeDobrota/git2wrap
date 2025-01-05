@@ -4,28 +4,30 @@ namespace git2wrap
 {
 
 repository::repository(git_repository* repo)
-    : m_repo(repo)
+    : m_repo(repo, git_repository_free)
 {
 }
 
 repository::repository(const char* path, unsigned is_bare)
 {
-  if (auto err = git_repository_init(&m_repo, path, is_bare)) {
+  git_repository* repo = nullptr;
+
+  if (auto err = git_repository_init(&repo, path, is_bare)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
+
+  m_repo = {repo, git_repository_free};
 }
 
 repository::repository(const char* path, init_options* opts)
 {
-  if (auto err = git_repository_init_ext(&m_repo, path, opts)) {
+  git_repository* repo = nullptr;
+
+  if (auto err = git_repository_init_ext(&repo, path, opts)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
-}
 
-repository::~repository()
-{
-  git_repository_free(m_repo);
-  m_repo = nullptr;
+  m_repo = {repo, git_repository_free};
 }
 
 repository repository::clone(const char* url,
@@ -88,7 +90,7 @@ repository::branch_iterator& repository::branch_iterator::operator++()
     }
   }
 
-  m_branch = {ref, type};
+  m_branch = branch(ref, type);
   return *this;
 }
 
@@ -97,7 +99,7 @@ repository::branch_iterator repository::branch_begin(
 {
   git_branch_iterator* iter = nullptr;
 
-  if (auto err = git_branch_iterator_new(&iter, m_repo, list_flags)) {
+  if (auto err = git_branch_iterator_new(&iter, m_repo.get(), list_flags)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
