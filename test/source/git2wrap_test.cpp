@@ -1,7 +1,8 @@
 #include <format>
 #include <iostream>
 
-#include "git2wrap/git2wrap.hpp"
+#include "git2wrap/error.hpp"
+#include "git2wrap/libgit2.hpp"
 
 int main()
 {

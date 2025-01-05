@@ -1,4 +1,4 @@
-#include "git2wrap/git2wrap.hpp"
+#include "git2wrap/reference.hpp"
 
 namespace git2wrap
 {

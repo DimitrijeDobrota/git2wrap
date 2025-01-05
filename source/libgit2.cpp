@@ -1,4 +1,6 @@
-#include "git2wrap/git2wrap.hpp"
+#include "git2wrap/libgit2.hpp"
+
+#include "git2wrap/error.hpp"
 
 namespace git2wrap
 {
