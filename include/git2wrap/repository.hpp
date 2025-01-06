@@ -18,6 +18,9 @@ public:
   repository(const char* path, unsigned is_bare);
   repository(const char* path, init_options* opts);
 
+  git_repository* get() { return m_repo.get(); }
+  const git_repository* get() const { return m_repo.get(); }
+
   static repository clone(const char* url,
                           const char* local_path,
                           const clone_options* options);
@@ -27,39 +30,12 @@ public:
                          unsigned flags,
                          const char* ceiling_dirs);
 
-  struct branch_iterator
-  {
-    explicit branch_iterator(git_branch_iterator* iter);
-    branch_iterator() = default;
-
-    branch_iterator(const branch_iterator&) = delete;
-    branch_iterator& operator=(const branch_iterator&) = delete;
-
-    branch_iterator(branch_iterator&&) = default;
-    branch_iterator& operator=(branch_iterator&&) = default;
-
-    ~branch_iterator();
-
-    branch& operator*() { return m_branch; }
-    branch* operator->() { return &m_branch; }
-    branch_iterator& operator++();
-
-    friend bool operator==(const branch_iterator& lhs,
-                           const branch_iterator& rhs);
-
-    friend bool operator!=(const branch_iterator& lhs,
-                           const branch_iterator& rhs);
-
-  private:
-    git_branch_iterator* m_iter = nullptr;
-    branch m_branch;
-  };
-
-  branch_iterator branch_begin(git_branch_t list_flags) const;
+  branch_iterator branch_begin(git_branch_t list_flags);
   branch_iterator branch_end() const;
 
 private:
-  std::unique_ptr<git_repository, std::function<void(git_repository*)>> m_repo;
+  using delete_f = std::function<void(git_repository*)>;
+  std::unique_ptr<git_repository, delete_f> m_repo;
 };
 
 }  // namespace git2wrap

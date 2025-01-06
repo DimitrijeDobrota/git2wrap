@@ -25,4 +25,37 @@ const std::string& branch::get_name()
   return m_name = name;
 }
 
+branch_iterator::branch_iterator(git_branch_iterator* iter)
+    : m_iter(iter, git_branch_iterator_free)
+{
+  if (iter != nullptr) {
+    ++*this;
+  }
+}
+
+branch_iterator& branch_iterator::operator++()
+{
+  git_reference* ref = nullptr;
+  git_branch_t type = {};
+
+  if (auto err = git_branch_next(&ref, &type, get())) {
+    if (err != GIT_ITEROVER) {
+      throw error(err, git_error_last(), __FILE__, __LINE__);
+    }
+  }
+
+  m_branch = branch(ref, type);
+  return *this;
+}
+
+bool operator==(const branch_iterator& lhs, const branch_iterator& rhs)
+{
+  return lhs.m_branch.get_reference() == rhs.m_branch.get_reference();
+}
+
+bool operator!=(const branch_iterator& lhs, const branch_iterator& rhs)
+{
+  return !(lhs == rhs);
+}
+
 }  // namespace git2wrap

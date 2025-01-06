@@ -8,9 +8,14 @@ reference::reference(git_reference* ref)
 {
 }
 
-git_reference* reference::get() const
+bool operator==(const reference& lhs, const reference& rhs)
 {
-  return m_ref.get();
+  return git_reference_cmp(lhs.get(), rhs.get()) == 0;
+}
+
+bool operator!=(const reference& lhs, const reference& rhs)
+{
+  return git_reference_cmp(lhs.get(), rhs.get()) != 0;
 }
 
 }  // namespace git2wrap

@@ -69,54 +69,20 @@ repository repository::open(const char* path,
   return repository(repo);
 }
 
-repository::branch_iterator::branch_iterator(git_branch_iterator* iter)
-    : m_iter(iter)
+branch_iterator repository::branch_end() const  // NOLINT
 {
-  ++*this;
+  return branch_iterator();
 }
 
-repository::branch_iterator::~branch_iterator()
-{
-  git_branch_iterator_free(m_iter);
-  m_iter = nullptr;
-}
-
-repository::branch_iterator& repository::branch_iterator::operator++()
-{
-  git_reference* ref = nullptr;
-  git_branch_t type = {};
-
-  if (auto err = git_branch_next(&ref, &type, m_iter)) {
-    if (err != GIT_ITEROVER) {
-      throw error(err, git_error_last(), __FILE__, __LINE__);
-    }
-  }
-
-  m_branch = branch(ref, type);
-  return *this;
-}
-
-repository::branch_iterator repository::branch_begin(
-    git_branch_t list_flags) const
+branch_iterator repository::branch_begin(git_branch_t list_flags)
 {
   git_branch_iterator* iter = nullptr;
 
-  if (auto err = git_branch_iterator_new(&iter, m_repo.get(), list_flags)) {
+  if (auto err = git_branch_iterator_new(&iter, get(), list_flags)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
   return branch_iterator(iter);
-}
-
-repository::branch_iterator repository::branch_end() const  // NOLINT
-{
-  return {};
-}
-
-bool operator!=(const repository::branch_iterator& lhs,
-                const repository::branch_iterator& rhs)
-{
-  return lhs.m_branch.get_reference() != rhs.m_branch.get_reference();
 }
 
 }  // namespace git2wrap
