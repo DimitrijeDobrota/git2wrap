@@ -69,6 +69,27 @@ repository repository::open(const char* path,
   return repository(repo);
 }
 
+object repository::revparse(const char* spec)
+{
+  git_object* obj = nullptr;
+
+  if (auto err = git_revparse_single(&obj, get(), spec)) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return object(obj);
+}
+
+commit repository::commit_lookup(const git_oid* oid)
+{
+  git_commit* commit = nullptr;
+  if (auto err = git_commit_lookup(&commit, get(), oid)) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return {commit, *this};
+}
+
 branch_iterator repository::branch_end() const  // NOLINT
 {
   return branch_iterator();

@@ -3,7 +3,9 @@
 #include <git2.h>
 
 #include "git2wrap/branch.hpp"
+#include "git2wrap/commit.hpp"
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/object.hpp"
 
 namespace git2wrap
 {
@@ -29,6 +31,9 @@ public:
   static repository open(const char* path,
                          unsigned flags,
                          const char* ceiling_dirs);
+
+  object revparse(const char* spec);
+  commit commit_lookup(const git_oid* oid);
 
   branch_iterator branch_begin(git_branch_t list_flags);
   branch_iterator branch_end() const;

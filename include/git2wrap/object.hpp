@@ -6,7 +6,6 @@
 #include <git2.h>
 
 #include "git2wrap/buf.hpp"
-#include "git2wrap/repository.hpp"
 #include "git2wrap/git2wrap_export.hpp"
 
 namespace git2wrap
@@ -29,7 +28,7 @@ public:
   const oid* get_id() const;
   buf get_id_short() const;
   object_t get_type() const;
-  repository get_owner() const;
+  // repository get_owner() const;
 
   static const char *type2string(object_t type);
   static git_object_t string2type(const char *str); 

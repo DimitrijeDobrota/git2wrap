@@ -42,10 +42,12 @@ object::object_t object::get_type() const
   return git_object_type(get());
 }
 
+/*
 repository object::get_owner() const
 {
   return repository(git_object_owner(get()));
 }
+*/
 
 const char* object::type2string(object_t type)
 {
