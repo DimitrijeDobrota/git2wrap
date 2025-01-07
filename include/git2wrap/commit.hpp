@@ -17,8 +17,20 @@ public:
   operator bool() const { return m_commit != nullptr; }  // NOLINT
   commitPtr get() const { return m_commit; }
 
-  const git_oid* get_id() const;
+  const oid* get_id() const;
   const char* get_summary() const;
+  const char* get_message_encoding() const;
+  const char* get_message() const;
+  const char* get_message_raw() const;
+  const char* get_body() const;
+  time_t get_time() const;
+  int get_time_offset() const;
+  const_signature get_signature() const;
+  const_signature get_author() const;
+  const char* get_raw_header() const;
+  unsigned get_parentcount() const;
+  commit get_parent(unsigned n = 0) const;
+  buf get_header_field(const char *field) const;
 
 private:
   commitPtr m_commit;

@@ -9,8 +9,6 @@
 namespace git2wrap
 {
 
-using oid = git_oid;
-
 class GIT2WRAP_EXPORT object
 {
 public:

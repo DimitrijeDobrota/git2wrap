@@ -13,6 +13,7 @@
 namespace git2wrap
 {
 
+class const_signature;
 class branch;
 class buf;
 class libgit2;
@@ -23,5 +24,10 @@ CLASS(object)
 CLASS(reference)
 CLASS(repository)
 CLASS(revwalk)
+CLASS(signature)
+
+using oid = git_oid;
+using time_t = git_time_t;
+using time = git_time;
 
 }  // namespace git2wrap
