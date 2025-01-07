@@ -10,6 +10,11 @@ repository::repository(git_repository* repo)
 {
 }
 
+repository::repository(repositoryPtr repo)
+    : m_repo(std::move(repo))
+{
+}
+
 repository::repository(const char* path, unsigned is_bare)
 {
   git_repository* repo = nullptr;
@@ -73,21 +78,21 @@ object repository::revparse(const char* spec)
 {
   git_object* obj = nullptr;
 
-  if (auto err = git_revparse_single(&obj, get(), spec)) {
+  if (auto err = git_revparse_single(&obj, m_repo.get(), spec)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
-  return object(obj);
+  return {obj, m_repo};
 }
 
-commit repository::commit_lookup(const git_oid* oid)
+commit repository::commit_lookup(const git_oid* objid)
 {
   git_commit* commit = nullptr;
-  if (auto err = git_commit_lookup(&commit, get(), oid)) {
+  if (auto err = git_commit_lookup(&commit, m_repo.get(), objid)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
-  return {commit, *this};
+  return {commit, m_repo};
 }
 
 branch_iterator repository::branch_end() const  // NOLINT
@@ -95,11 +100,11 @@ branch_iterator repository::branch_end() const  // NOLINT
   return branch_iterator();
 }
 
-branch_iterator repository::branch_begin(git_branch_t list_flags)
+branch_iterator repository::branch_begin(git_branch_t list_flags) const
 {
   git_branch_iterator* iter = nullptr;
 
-  if (auto err = git_branch_iterator_new(&iter, get(), list_flags)) {
+  if (auto err = git_branch_iterator_new(&iter, m_repo.get(), list_flags)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 

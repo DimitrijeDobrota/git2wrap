@@ -6,45 +6,45 @@
 namespace git2wrap
 {
 
-revwalk::revwalk(repository& repo)
-    : m_repo(&repo)
+revwalk::revwalk(repositoryPtr repo)
+    : m_repo(std::move(repo))
 {
   git_revwalk* rwalk = nullptr;
 
-  if (auto err = git_revwalk_new(&rwalk, repo.get())) {
+  if (auto err = git_revwalk_new(&rwalk, m_repo.get())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
   m_revwalk = {rwalk, git_revwalk_free};
 }
 
-void revwalk::push(const git_oid* oid)
+void revwalk::push(const git_oid* objid)
 {
-  if (auto err = git_revwalk_push(get(), oid)) {
+  if (auto err = git_revwalk_push(m_revwalk.get(), objid)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 }
 
 void revwalk::push_glob(const char* glob)
 {
-  if (auto err = git_revwalk_push_glob(get(), glob)) {
+  if (auto err = git_revwalk_push_glob(m_revwalk.get(), glob)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 }
 
 void revwalk::push_head()
 {
-  if (auto err = git_revwalk_push_head(get())) {
+  if (auto err = git_revwalk_push_head(m_revwalk.get())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 }
 
 commit revwalk::next()
 {
-  static git_oid oid;
+  static git_oid objid;
 
-  if (git_revwalk_next(&oid, get()) == 0) {
-    return m_repo->commit_lookup(&oid);
+  if (git_revwalk_next(&objid, m_revwalk.get()) == 0) {
+    return repository(m_repo).commit_lookup(&objid);
   }
 
   return {};
@@ -52,7 +52,7 @@ commit revwalk::next()
 
 void revwalk::reset()
 {
-  if (auto err = git_revwalk_reset(get())) {
+  if (auto err = git_revwalk_reset(m_revwalk.get())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 }

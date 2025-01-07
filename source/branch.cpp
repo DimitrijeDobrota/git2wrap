@@ -4,9 +4,8 @@
 
 namespace git2wrap
 {
-
 branch::branch(git_reference* ref, git_branch_t type)
-    : m_ref(ref)
+    : m_ref(ref, git_reference_free)
     , m_type(type)
 {
 }

@@ -5,8 +5,9 @@
 namespace git2wrap
 {
 
-object::object(git_object* obj)
+object::object(git_object* obj, repositoryPtr repo)
     : m_obj(obj, git_object_free)
+    , m_repo(std::move(repo))
 {
 }
 
@@ -19,18 +20,18 @@ object object::clone()
 {
   git_object* obj = nullptr;
 
-  if (auto err = git_object_dup(&obj, get())) {
+  if (auto err = git_object_dup(&obj, m_obj.get())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
-  return object(obj);
+  return {obj, m_repo};
 }
 
 buf object::get_id_short() const
 {
   buf bufr;
 
-  if (auto err = git_object_short_id(bufr.get(), get())) {
+  if (auto err = git_object_short_id(bufr.get(), m_obj.get())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
@@ -39,15 +40,13 @@ buf object::get_id_short() const
 
 object::object_t object::get_type() const
 {
-  return git_object_type(get());
+  return git_object_type(m_obj.get());
 }
 
-/*
-repository object::get_owner() const
+repositoryPtr object::get_owner() const
 {
-  return repository(git_object_owner(get()));
+  return m_repo;
 }
-*/
 
 const char* object::type2string(object_t type)
 {

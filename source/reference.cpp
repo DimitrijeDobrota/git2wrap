@@ -10,12 +10,12 @@ reference::reference(git_reference* ref)
 
 bool operator==(const reference& lhs, const reference& rhs)
 {
-  return git_reference_cmp(lhs.get(), rhs.get()) == 0;
+  return git_reference_cmp(lhs.m_ref.get(), rhs.m_ref.get()) == 0;
 }
 
 bool operator!=(const reference& lhs, const reference& rhs)
 {
-  return git_reference_cmp(lhs.get(), rhs.get()) != 0;
+  return !(lhs == rhs);
 }
 
 }  // namespace git2wrap
