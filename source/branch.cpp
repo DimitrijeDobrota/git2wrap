@@ -4,10 +4,22 @@
 
 namespace git2wrap
 {
+
 branch::branch(git_reference* ref, git_branch_t type)
-    : m_ref(ref, git_reference_free)
+    : m_ref(ref)
     , m_type(type)
 {
+}
+
+branch::branch(reference ref, git_branch_t type)
+    : m_ref(std::move(ref))
+    , m_type(type)
+{
+}
+
+branch branch::dup() const
+{
+  return {m_ref.dup(), m_type};
 }
 
 const std::string& branch::get_name()

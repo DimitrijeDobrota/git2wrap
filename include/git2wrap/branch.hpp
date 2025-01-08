@@ -3,6 +3,7 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/reference.hpp"
 #include "git2wrap/types.hpp"
 
 namespace git2wrap
@@ -13,16 +14,18 @@ class GIT2WRAP_EXPORT branch
 public:
   explicit branch(git_reference* ref = nullptr,
                   git_branch_t type = git_branch_t(0));
-  explicit branch(referencePtr ref, git_branch_t type = git_branch_t(0));
+  branch(reference ref, git_branch_t type);
 
-  operator bool() const { return m_ref != nullptr; }  // NOLINT
+  operator bool() const { return m_ref; }  // NOLINT
+  branch dup() const;
+
   git_branch_t get_type() const { return m_type; }
 
   const std::string& get_name();
 
 private:
-  referenceUPtr m_ref;
-  git_branch_t m_type = {};
+  reference m_ref;
+  git_branch_t m_type;
 
   std::string m_name;
 };
