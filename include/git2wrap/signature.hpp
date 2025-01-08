@@ -11,33 +11,18 @@ namespace git2wrap
 class GIT2WRAP_EXPORT signature
 {
 public:
+  explicit signature(const git_signature* sig);
   explicit signature(git_signature* sig);
 
   operator bool() const { return m_sig != nullptr; }  // NOLINT
-  signaturePtr get() const { return m_sig; }
+  signature dup() const;
 
   const char* get_email() const { return m_sig->email; }
   const char* get_name() const { return m_sig->name; }
   time get_time() const { return m_sig->when; }
 
 private:
-  signaturePtr m_sig;
-};
-
-class GIT2WRAP_EXPORT const_signature
-{
-public:
-  explicit const_signature(const git_signature* sig);
-
-  operator bool() const { return m_sig != nullptr; }  // NOLINT
-  const git_signature* get() const { return m_sig; }
-
-  const char* get_email() const { return m_sig->email; }
-  const char* get_name() const { return m_sig->name; }
-  time get_time() const { return m_sig->when; }
-
-private:
-  const git_signature* m_sig;
+  signatureUPtr m_sig;
 };
 
 }  // namespace git2wrap

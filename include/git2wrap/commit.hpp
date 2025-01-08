@@ -15,7 +15,7 @@ public:
   commit() = default;
 
   operator bool() const { return m_commit != nullptr; }  // NOLINT
-  commitPtr get() const { return m_commit; }
+  commit dup() const;
 
   const oid* get_id() const;
   const char* get_summary() const;
@@ -25,15 +25,15 @@ public:
   const char* get_body() const;
   time_t get_time() const;
   int get_time_offset() const;
-  const_signature get_signature() const;
-  const_signature get_author() const;
+  signature get_signature() const;
+  signature get_author() const;
   const char* get_raw_header() const;
   unsigned get_parentcount() const;
   commit get_parent(unsigned n = 0) const;
-  buf get_header_field(const char *field) const;
+  buf get_header_field(const char* field) const;
 
 private:
-  commitPtr m_commit;
+  commitUPtr m_commit;
   repositoryPtr m_repo;
 };
 

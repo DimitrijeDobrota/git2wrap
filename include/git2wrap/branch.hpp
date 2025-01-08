@@ -16,13 +16,12 @@ public:
   explicit branch(referencePtr ref, git_branch_t type = git_branch_t(0));
 
   operator bool() const { return m_ref != nullptr; }  // NOLINT
-  referencePtr get_reference() const { return m_ref; }
   git_branch_t get_type() const { return m_type; }
 
   const std::string& get_name();
 
 private:
-  referencePtr m_ref;
+  referenceUPtr m_ref;
   git_branch_t m_type = {};
 
   std::string m_name;
@@ -47,7 +46,7 @@ public:
                          const branch_iterator& rhs);
 
 private:
-  branch_iteratorPtr m_iter;
+  branch_iteratorUPtr m_iter;
   branch m_branch;
 };
 

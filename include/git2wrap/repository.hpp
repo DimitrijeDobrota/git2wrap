@@ -22,6 +22,7 @@ public:
   repository(const char* path, unsigned is_bare);
   repository(const char* path, init_options* opts);
 
+  operator repositoryPtr() const { return m_repo; }  // NOLINT
   operator bool() const { return m_repo != nullptr; }  // NOLINT
   repositoryPtr get() const { return m_repo; }
 

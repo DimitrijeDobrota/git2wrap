@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 
 #include <git2.h>
@@ -7,13 +8,14 @@
 // NOLINTBEGIN
 #define CLASS(T) \
   class T; \
-  using T##Ptr = std::shared_ptr<git_##T>;
+  using T##Del = std::function<void(git_##T*)>; \
+  using T##Ptr = std::shared_ptr<git_##T>; \
+  using T##UPtr = std::unique_ptr<git_##T, T##Del>;
 // NOLINTEND
 
 namespace git2wrap
 {
 
-class const_signature;
 class branch;
 class buf;
 class libgit2;

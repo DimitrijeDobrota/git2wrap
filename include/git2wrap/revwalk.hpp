@@ -16,7 +16,6 @@ public:
   revwalk(revwalkPtr revwalk, repositoryPtr repo);
 
   operator bool() const { return m_revwalk != nullptr; }  // NOLINT
-  revwalkPtr get() const { return m_revwalk; }
 
   void push(const git_oid* objid);
   void push_glob(const char* glob);
@@ -26,7 +25,7 @@ public:
   void reset();
 
 private:
-  revwalkPtr m_revwalk;
+  revwalkUPtr m_revwalk;
   repositoryPtr m_repo;
 };
 

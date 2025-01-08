@@ -49,7 +49,7 @@ branch_iterator& branch_iterator::operator++()
 
 bool operator==(const branch_iterator& lhs, const branch_iterator& rhs)
 {
-  return lhs.m_branch.get_reference() == rhs.m_branch.get_reference();
+  return lhs.m_branch == rhs.m_branch;
 }
 
 bool operator!=(const branch_iterator& lhs, const branch_iterator& rhs)

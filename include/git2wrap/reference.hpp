@@ -14,13 +14,13 @@ public:
   explicit reference(git_reference* ref = nullptr);
 
   operator bool() const { return m_ref != nullptr; } // NOLINT
-  referencePtr get() const { return m_ref; }
+  reference dup() const;
 
   friend bool operator==(const reference& lhs, const reference& rhs);
   friend bool operator!=(const reference& lhs, const reference& rhs);
 
 private:
-  referencePtr m_ref;
+  referenceUPtr m_ref;
 };
 
 }  // namespace git2wrap

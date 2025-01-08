@@ -11,12 +11,7 @@ object::object(git_object* obj, repositoryPtr repo)
 {
 }
 
-const oid* object::get_id() const
-{
-  return git_object_id(m_obj.get());
-}
-
-object object::clone()
+object object::dup() const
 {
   git_object* obj = nullptr;
 
@@ -25,6 +20,11 @@ object object::clone()
   }
 
   return {obj, m_repo};
+}
+
+const oid* object::get_id() const
+{
+  return git_object_id(m_obj.get());
 }
 
 buf object::get_id_short() const

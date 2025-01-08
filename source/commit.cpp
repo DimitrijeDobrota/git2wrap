@@ -13,6 +13,17 @@ commit::commit(git_commit* cmt, repositoryPtr repo)
 {
 }
 
+commit commit::dup() const
+{
+  git_commit* cmt = nullptr;
+
+  if (auto err = git_commit_dup(&cmt, m_commit.get())) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return {cmt, m_repo};
+}
+
 const git_oid* commit::get_id() const
 {
   return git_commit_id(m_commit.get());
@@ -53,14 +64,14 @@ int commit::get_time_offset() const
   return git_commit_time_offset(m_commit.get());
 }
 
-const_signature commit::get_signature() const
+signature commit::get_signature() const
 {
-  return const_signature(git_commit_committer(m_commit.get()));
+  return signature(git_commit_committer(m_commit.get()));
 }
 
-const_signature commit::get_author() const
+signature commit::get_author() const
 {
-  return const_signature(git_commit_author(m_commit.get()));
+  return signature(git_commit_author(m_commit.get()));
 }
 
 const char* commit::get_raw_header() const

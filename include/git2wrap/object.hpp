@@ -18,9 +18,7 @@ public:
   object() = default;
 
   operator bool() const { return m_obj != nullptr; }  // NOLINT
-  objectPtr get() const { return m_obj; }
-
-  object clone();
+  object dup() const;
 
   const oid* get_id() const;
   buf get_id_short() const;
@@ -31,7 +29,7 @@ public:
   static git_object_t string2type(const char* str);
 
 private:
-  objectPtr m_obj;
+  objectUPtr m_obj;
   repositoryPtr m_repo;
 };
 
