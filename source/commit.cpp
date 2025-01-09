@@ -106,4 +106,15 @@ buf commit::get_header_field(const char* field) const
   return bufr;
 }
 
+tree commit::get_tree() const
+{
+  git_tree* tre = nullptr;
+
+  if (auto err = git_commit_tree(&tre, m_commit.get())) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return {tre, m_repo};
+}
+
 }  // namespace git2wrap

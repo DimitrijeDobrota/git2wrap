@@ -74,7 +74,7 @@ repository repository::open(const char* path,
   return repository(repo);
 }
 
-object repository::revparse(const char* spec)
+object repository::revparse(const char* spec) const
 {
   git_object* obj = nullptr;
 
@@ -85,7 +85,7 @@ object repository::revparse(const char* spec)
   return {obj, m_repo};
 }
 
-commit repository::commit_lookup(const git_oid* objid)
+commit repository::commit_lookup(const git_oid* objid) const
 {
   git_commit* commit = nullptr;
   if (auto err = git_commit_lookup(&commit, m_repo.get(), objid)) {

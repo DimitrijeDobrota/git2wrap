@@ -1,14 +1,7 @@
 #include "git2wrap/signature.hpp"
 
 #include "git2wrap/error.hpp"
-
-static const struct empty_lambda_t  // static and const applies to the object!
-{
-  template<typename... T>
-  void operator()(T&&...) const  // NOLINT
-  {
-  }  // does nothing
-} empty_lambda {};  // declare an object which is static and const
+#include "git2wrap/types.hpp"
 
 namespace git2wrap
 {

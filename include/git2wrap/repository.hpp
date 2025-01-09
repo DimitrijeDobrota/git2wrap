@@ -35,8 +35,8 @@ public:
                          unsigned flags,
                          const char* ceiling_dirs);
 
-  object revparse(const char* spec);
-  commit commit_lookup(const git_oid* objid);
+  object revparse(const char* spec) const;
+  commit commit_lookup(const git_oid* objid) const;
 
   branch_iterator branch_begin(git_branch_t list_flags) const;
   branch_iterator branch_end() const;

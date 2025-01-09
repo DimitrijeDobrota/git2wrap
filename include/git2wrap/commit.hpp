@@ -3,6 +3,7 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/tree.hpp"
 #include "git2wrap/types.hpp"
 
 namespace git2wrap
@@ -31,6 +32,8 @@ public:
   unsigned get_parentcount() const;
   commit get_parent(unsigned n = 0) const;
   buf get_header_field(const char* field) const;
+
+  tree get_tree() const;
 
 private:
   commitUPtr m_commit;
