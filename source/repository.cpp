@@ -1,6 +1,8 @@
 #include "git2wrap/repository.hpp"
 
+#include "git2wrap/commit.hpp"
 #include "git2wrap/error.hpp"
+#include "git2wrap/tag.hpp"
 
 namespace git2wrap
 {
@@ -85,14 +87,26 @@ object repository::revparse(const char* spec) const
   return {obj, m_repo};
 }
 
-commit repository::commit_lookup(const git_oid* objid) const
+commit repository::commit_lookup(const oid* objid) const
 {
   git_commit* commit = nullptr;
+
   if (auto err = git_commit_lookup(&commit, m_repo.get(), objid)) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
   return {commit, m_repo};
+}
+
+tag repository::tag_lookup(const oid* objid) const
+{
+  git_tag* tagg = nullptr;
+
+  if (auto err = git_tag_lookup(&tagg, m_repo.get(), objid)) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return {tagg, m_repo};
 }
 
 branch_iterator repository::branch_end() const  // NOLINT
@@ -109,6 +123,13 @@ branch_iterator repository::branch_begin(git_branch_t list_flags) const
   }
 
   return branch_iterator(iter);
+}
+
+void repository::tag_foreach(git_tag_foreach_cb callback, void* payload) const
+{
+  if (auto err = git_tag_foreach(m_repo.get(), callback, payload)) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
 }
 
 }  // namespace git2wrap

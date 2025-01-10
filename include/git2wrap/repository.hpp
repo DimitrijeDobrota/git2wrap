@@ -6,6 +6,7 @@
 #include "git2wrap/commit.hpp"
 #include "git2wrap/git2wrap_export.hpp"
 #include "git2wrap/object.hpp"
+#include "git2wrap/tag.hpp"
 #include "git2wrap/types.hpp"
 
 namespace git2wrap
@@ -36,10 +37,13 @@ public:
                          const char* ceiling_dirs);
 
   object revparse(const char* spec) const;
-  commit commit_lookup(const git_oid* objid) const;
+  commit commit_lookup(const oid* objid) const;
+  tag tag_lookup(const oid* objid) const;
 
   branch_iterator branch_begin(git_branch_t list_flags) const;
   branch_iterator branch_end() const;
+
+  void tag_foreach(tag_foreach_cb callback, void* payload) const;
 
 private:
   repositoryPtr m_repo;

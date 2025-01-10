@@ -27,6 +27,7 @@ CLASS(reference)
 CLASS(repository)
 CLASS(revwalk)
 CLASS(signature)
+CLASS(tag)
 CLASS(tree)
 CLASS(tree_entry)
 
@@ -35,6 +36,8 @@ using time_t = git_time_t;
 using time = git_time;
 using object_t = git_object_t;
 using filemode_t = git_filemode_t;
+
+using tag_foreach_cb = git_tag_foreach_cb;
 
 static const struct empty_lambda_t  // static and const applies to the object!
 {
