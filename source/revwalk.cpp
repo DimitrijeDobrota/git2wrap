@@ -18,9 +18,9 @@ revwalk::revwalk(repositoryPtr repo)
   m_revwalk = {rwalk, git_revwalk_free};
 }
 
-void revwalk::push(const git_oid* objid)
+void revwalk::push(const oid& objid)
 {
-  if (auto err = git_revwalk_push(m_revwalk.get(), objid)) {
+  if (auto err = git_revwalk_push(m_revwalk.get(), objid.ptr())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 }
@@ -44,7 +44,7 @@ commit revwalk::next()
   static git_oid objid;
 
   if (git_revwalk_next(&objid, m_revwalk.get()) == 0) {
-    return repository(m_repo).commit_lookup(&objid);
+    return repository(m_repo).commit_lookup(oid(&objid));
   }
 
   return {};

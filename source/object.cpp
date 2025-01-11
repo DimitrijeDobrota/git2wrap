@@ -22,9 +22,9 @@ object object::dup() const
   return {obj, m_repo};
 }
 
-const oid* object::get_id() const
+oid object::get_id() const
 {
-  return git_object_id(m_obj.get());
+  return oid(git_object_id(m_obj.get()));
 }
 
 buf object::get_id_short() const

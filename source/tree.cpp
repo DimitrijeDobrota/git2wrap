@@ -24,9 +24,9 @@ tree tree::dup() const
   return {tre, m_repo};
 }
 
-const oid* tree::get_id() const
+oid tree::get_id() const
 {
-  return git_tree_id(m_tree.get());
+  return oid(git_tree_id(m_tree.get()));
 }
 
 repositoryPtr tree::get_owner() const
@@ -49,9 +49,9 @@ tree_entry tree::get_entry(size_t idx) const
   return {git_tree_entry_byindex(m_tree.get(), idx), m_repo};
 }
 
-tree_entry tree::get_entry(const oid* objid) const
+tree_entry tree::get_entry(const oid& objid) const
 {
-  return {git_tree_entry_byid(m_tree.get(), objid), m_repo};
+  return {git_tree_entry_byid(m_tree.get(), objid.ptr()), m_repo};
 }
 
 tree_entry tree::get_entry_path(const char* path) const
@@ -115,9 +115,9 @@ const char* tree_entry::get_name() const
   return git_tree_entry_name(m_entry.get());
 }
 
-const oid* tree_entry::get_id() const
+oid tree_entry::get_id() const
 {
-  return git_tree_entry_id(m_entry.get());
+  return oid(git_tree_entry_id(m_entry.get()));
 }
 
 object_t tree_entry::get_type() const

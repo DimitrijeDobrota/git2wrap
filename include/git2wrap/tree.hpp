@@ -3,6 +3,7 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/oid.hpp"
 #include "git2wrap/types.hpp"
 
 namespace git2wrap
@@ -14,15 +15,16 @@ public:
   tree(git_tree* tre, repositoryPtr repo);
 
   operator bool() const { return m_tree != nullptr; }  // NOLINT
+  git_tree* ptr() const { return m_tree.get(); }
   tree dup() const;
 
-  const oid* get_id() const;
+  oid get_id() const;
   repositoryPtr get_owner() const;
   size_t get_entrycount() const;
 
   tree_entry get_entry(const char* name) const;
   tree_entry get_entry(size_t idx) const;
-  tree_entry get_entry(const oid* objid) const;
+  tree_entry get_entry(const oid& objid) const;
   tree_entry get_entry_path(const char* path) const;
 
 private:
@@ -43,7 +45,7 @@ public:
   tree to_tree() const;
 
   const char* get_name() const;
-  const oid* get_id() const;
+  oid get_id() const;
   object_t get_type() const;
   filemode_t get_filemode() const;
   filemode_t get_filemode_raw() const;

@@ -3,6 +3,7 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/oid.hpp"
 #include "git2wrap/signature.hpp"
 #include "git2wrap/types.hpp"
 
@@ -17,9 +18,9 @@ public:
   operator bool() const { return m_tag != nullptr; }  // NOLINT
   tag dup() const;
 
-  const oid* get_id() const;
+  oid get_id() const;
   repositoryPtr get_owner() const;
-  const oid* get_target_id() const;
+  oid get_target_id() const;
   object_t get_target_type() const;
   const char* get_name() const;
   signature get_tagger() const;

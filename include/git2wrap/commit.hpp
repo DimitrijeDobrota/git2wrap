@@ -5,6 +5,7 @@
 #include "git2wrap/git2wrap_export.hpp"
 #include "git2wrap/tree.hpp"
 #include "git2wrap/types.hpp"
+#include "git2wrap/oid.hpp"
 
 namespace git2wrap
 {
@@ -18,7 +19,7 @@ public:
   operator bool() const { return m_commit != nullptr; }  // NOLINT
   commit dup() const;
 
-  const oid* get_id() const;
+  oid get_id() const;
   const char* get_summary() const;
   const char* get_message_encoding() const;
   const char* get_message() const;

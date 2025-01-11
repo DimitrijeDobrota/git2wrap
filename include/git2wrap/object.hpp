@@ -4,6 +4,7 @@
 
 #include "git2wrap/buf.hpp"
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/oid.hpp"
 #include "git2wrap/types.hpp"
 
 namespace git2wrap
@@ -20,7 +21,7 @@ public:
   operator bool() const { return m_obj != nullptr; }  // NOLINT
   object dup() const;
 
-  const oid* get_id() const;
+  oid get_id() const;
   buf get_id_short() const;
   object_t get_type() const;
   repositoryPtr get_owner() const;

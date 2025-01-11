@@ -22,7 +22,9 @@ class libgit2;
 
 CLASS(branch_iterator)
 CLASS(commit)
+CLASS(diff)
 CLASS(object)
+CLASS(oid)
 CLASS(reference)
 CLASS(repository)
 CLASS(revwalk)
@@ -31,7 +33,6 @@ CLASS(tag)
 CLASS(tree)
 CLASS(tree_entry)
 
-using oid = git_oid;
 using time_t = git_time_t;
 using time = git_time;
 using object_t = git_object_t;

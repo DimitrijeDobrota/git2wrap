@@ -4,7 +4,7 @@ include(cmake/prelude.cmake)
 
 project(
     git2wrap
-    VERSION 0.1.13
+    VERSION 0.1.14
     DESCRIPTION "C++ 20 wrapper for libgit2"
     HOMEPAGE_URL "https://git.dimitrijedobrota.com/git2wrap.git"
     LANGUAGES CXX
@@ -20,8 +20,10 @@ add_library(
     source/branch.cpp
     source/buf.cpp
     source/commit.cpp
+    source/diff.cpp
     source/libgit2.cpp
     source/object.cpp
+    source/oid.cpp
     source/reference.cpp
     source/repository.cpp
     source/revwalk.cpp

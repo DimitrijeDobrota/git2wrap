@@ -4,6 +4,7 @@
 
 #include "git2wrap/commit.hpp"
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/oid.hpp"
 #include "git2wrap/types.hpp"
 
 namespace git2wrap
@@ -17,7 +18,7 @@ public:
 
   operator bool() const { return m_revwalk != nullptr; }  // NOLINT
 
-  void push(const git_oid* objid);
+  void push(const oid& objid);
   void push_glob(const char* glob);
   void push_head();
 

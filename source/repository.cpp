@@ -87,22 +87,22 @@ object repository::revparse(const char* spec) const
   return {obj, m_repo};
 }
 
-commit repository::commit_lookup(const oid* objid) const
+commit repository::commit_lookup(const oid& objid) const
 {
   git_commit* commit = nullptr;
 
-  if (auto err = git_commit_lookup(&commit, m_repo.get(), objid)) {
+  if (auto err = git_commit_lookup(&commit, m_repo.get(), objid.ptr())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 
   return {commit, m_repo};
 }
 
-tag repository::tag_lookup(const oid* objid) const
+tag repository::tag_lookup(const oid& objid) const
 {
   git_tag* tagg = nullptr;
 
-  if (auto err = git_tag_lookup(&tagg, m_repo.get(), objid)) {
+  if (auto err = git_tag_lookup(&tagg, m_repo.get(), objid.ptr())) {
     throw error(err, git_error_last(), __FILE__, __LINE__);
   }
 

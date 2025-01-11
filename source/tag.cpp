@@ -22,9 +22,9 @@ tag tag::dup() const
   return {tagg, m_repo};
 }
 
-const oid* tag::get_id() const
+oid tag::get_id() const
 {
-  return git_tag_id(m_tag.get());
+  return oid(git_tag_id(m_tag.get()));
 }
 
 repositoryPtr tag::get_owner() const
@@ -32,9 +32,9 @@ repositoryPtr tag::get_owner() const
   return m_repo;
 }
 
-const oid* tag::get_target_id() const
+oid tag::get_target_id() const
 {
-  return git_tag_target_id(m_tag.get());
+  return oid(git_tag_target_id(m_tag.get()));
 }
 
 object_t tag::get_target_type() const

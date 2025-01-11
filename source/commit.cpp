@@ -24,9 +24,9 @@ commit commit::dup() const
   return {cmt, m_repo};
 }
 
-const git_oid* commit::get_id() const
+oid commit::get_id() const
 {
-  return git_commit_id(m_commit.get());
+  return oid(git_commit_id(m_commit.get()));
 }
 
 const char* commit::get_summary() const

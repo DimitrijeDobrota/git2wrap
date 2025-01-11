@@ -6,6 +6,7 @@
 #include "git2wrap/commit.hpp"
 #include "git2wrap/git2wrap_export.hpp"
 #include "git2wrap/object.hpp"
+#include "git2wrap/oid.hpp"
 #include "git2wrap/tag.hpp"
 #include "git2wrap/types.hpp"
 
@@ -37,8 +38,8 @@ public:
                          const char* ceiling_dirs);
 
   object revparse(const char* spec) const;
-  commit commit_lookup(const oid* objid) const;
-  tag tag_lookup(const oid* objid) const;
+  commit commit_lookup(const oid& objid) const;
+  tag tag_lookup(const oid& objid) const;
 
   branch_iterator branch_begin(git_branch_t list_flags) const;
   branch_iterator branch_end() const;
