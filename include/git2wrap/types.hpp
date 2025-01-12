@@ -38,6 +38,12 @@ using time = git_time;
 using object_t = git_object_t;
 using filemode_t = git_filemode_t;
 
+using diff_options = git_diff_options;
+
+using diff_binary_cb = git_diff_binary_cb;
+using diff_file_cb = git_diff_file_cb;
+using diff_hunk_cb = git_diff_hunk_cb;
+using diff_line_cb = git_diff_line_cb;
 using tag_foreach_cb = git_tag_foreach_cb;
 
 static const struct empty_lambda_t  // static and const applies to the object!
