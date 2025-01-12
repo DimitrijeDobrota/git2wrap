@@ -23,6 +23,7 @@ class libgit2;
 CLASS(branch_iterator)
 CLASS(commit)
 CLASS(diff)
+CLASS(diff_stats)
 CLASS(object)
 CLASS(oid)
 CLASS(reference)

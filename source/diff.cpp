@@ -36,4 +36,35 @@ diff diff::tree_to_tree(const tree& old,
   return {dif, old.get_owner()};
 }
 
+diff_stats::diff_stats(git_diff_stats* stats)
+    : m_stats(stats, git_diff_stats_free)
+{
+}
+
+diff_stats diff::get_stats() const
+{
+  git_diff_stats* stats = nullptr;
+
+  if (auto err = git_diff_get_stats(&stats, m_diff.get())) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return diff_stats(stats);
+}
+
+size_t diff_stats::files_changed() const
+{
+  return git_diff_stats_files_changed(m_stats.get());
+}
+
+size_t diff_stats::insertions() const
+{
+  return git_diff_stats_insertions(m_stats.get());
+}
+
+size_t diff_stats::deletions() const
+{
+  return git_diff_stats_deletions(m_stats.get());
+}
+
 }  // namespace git2wrap
