@@ -2,6 +2,7 @@
 
 #include <git2.h>
 
+#include "git2wrap/blob.hpp"
 #include "git2wrap/branch.hpp"
 #include "git2wrap/commit.hpp"
 #include "git2wrap/git2wrap_export.hpp"
@@ -39,6 +40,7 @@ public:
 
   object revparse(const char* spec) const;
   commit commit_lookup(const oid& objid) const;
+  blob blob_lookup(const oid& objid) const;
   tag tag_lookup(const oid& objid) const;
 
   branch_iterator branch_begin(git_branch_t list_flags) const;

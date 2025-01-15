@@ -20,6 +20,7 @@ class branch;
 class buf;
 class libgit2;
 
+CLASS(blob)
 CLASS(branch_iterator)
 CLASS(commit)
 CLASS(diff)
@@ -38,6 +39,8 @@ using time_t = git_time_t;
 using time = git_time;
 using object_t = git_object_t;
 using filemode_t = git_filemode_t;
+using off_t = git_off_t;
+using object_size_t = git_object_size_t;
 
 using diff_options = git_diff_options;
 

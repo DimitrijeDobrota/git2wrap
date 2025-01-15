@@ -45,6 +45,7 @@ public:
   tree to_tree() const;
 
   const char* get_name() const;
+  repositoryPtr get_owner() const;
   oid get_id() const;
   object_t get_type() const;
   filemode_t get_filemode() const;

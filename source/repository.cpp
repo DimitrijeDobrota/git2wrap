@@ -98,6 +98,17 @@ commit repository::commit_lookup(const oid& objid) const
   return {commit, m_repo};
 }
 
+blob repository::blob_lookup(const oid& objid) const
+{
+  git_blob* blob = nullptr;
+
+  if (auto err = git_blob_lookup(&blob, m_repo.get(), objid.ptr())) {
+    throw error(err, git_error_last(), __FILE__, __LINE__);
+  }
+
+  return {blob, m_repo};
+}
+
 tag repository::tag_lookup(const oid& objid) const
 {
   git_tag* tagg = nullptr;

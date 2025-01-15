@@ -52,17 +52,17 @@ diff_stats diff::get_stats() const
   return diff_stats(stats);
 }
 
-size_t diff_stats::files_changed() const
+size_t diff_stats::get_files_changed() const
 {
   return git_diff_stats_files_changed(m_stats.get());
 }
 
-size_t diff_stats::insertions() const
+size_t diff_stats::get_insertions() const
 {
   return git_diff_stats_insertions(m_stats.get());
 }
 
-size_t diff_stats::deletions() const
+size_t diff_stats::get_deletions() const
 {
   return git_diff_stats_deletions(m_stats.get());
 }

@@ -120,6 +120,11 @@ oid tree_entry::get_id() const
   return oid(git_tree_entry_id(m_entry.get()));
 }
 
+repositoryPtr tree_entry::get_owner() const
+{
+  return m_repo;
+}
+
 object_t tree_entry::get_type() const
 {
   return git_tree_entry_type(m_entry.get());

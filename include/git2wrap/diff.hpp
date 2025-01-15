@@ -38,9 +38,9 @@ class GIT2WRAP_EXPORT diff_stats
 public:
   explicit diff_stats(git_diff_stats* stats);
 
-  size_t files_changed() const;
-  size_t insertions() const;
-  size_t deletions() const;
+  size_t get_files_changed() const;
+  size_t get_insertions() const;
+  size_t get_deletions() const;
 
 private:
   diff_statsUPtr m_stats;
