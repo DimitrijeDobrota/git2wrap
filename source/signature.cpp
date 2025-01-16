@@ -19,11 +19,7 @@ signature::signature(git_signature* sig)
 signature signature::dup() const
 {
   git_signature* sig = nullptr;
-
-  if (auto err = git_signature_dup(&sig, m_sig.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
-  }
-
+  git_signature_dup(&sig, m_sig.get());
   return signature(sig);
 }
 

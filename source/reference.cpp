@@ -13,11 +13,7 @@ reference::reference(git_reference* ref)
 reference reference::dup() const
 {
   git_reference* ref = nullptr;
-
-  if (auto err = git_reference_dup(&ref, m_ref.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
-  }
-
+  git_reference_dup(&ref, m_ref.get());
   return reference(ref);
 }
 

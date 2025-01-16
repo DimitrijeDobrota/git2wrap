@@ -11,8 +11,8 @@ revwalk::revwalk(repositoryPtr repo)
 {
   git_revwalk* rwalk = nullptr;
 
-  if (auto err = git_revwalk_new(&rwalk, m_repo.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_revwalk_new(&rwalk, m_repo.get()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 
   m_revwalk = {rwalk, git_revwalk_free};
@@ -20,22 +20,22 @@ revwalk::revwalk(repositoryPtr repo)
 
 void revwalk::push(const oid& objid)
 {
-  if (auto err = git_revwalk_push(m_revwalk.get(), objid.ptr())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_revwalk_push(m_revwalk.get(), objid.ptr()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 }
 
 void revwalk::push_glob(const char* glob)
 {
-  if (auto err = git_revwalk_push_glob(m_revwalk.get(), glob)) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_revwalk_push_glob(m_revwalk.get(), glob) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 }
 
 void revwalk::push_head()
 {
-  if (auto err = git_revwalk_push_head(m_revwalk.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_revwalk_push_head(m_revwalk.get()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 }
 
@@ -43,8 +43,11 @@ commit revwalk::next()
 {
   static git_oid objid;
 
-  if (git_revwalk_next(&objid, m_revwalk.get()) == 0) {
-    return repository(m_repo).commit_lookup(oid(&objid));
+  switch (git_revwalk_next(&objid, m_revwalk.get())) {
+    case error_code_t::OK:
+      return repository(m_repo).commit_lookup(oid(&objid));
+    case error_code_t::ITEROVER:
+      break;
   }
 
   return {};
@@ -52,8 +55,8 @@ commit revwalk::next()
 
 void revwalk::reset()
 {
-  if (auto err = git_revwalk_reset(m_revwalk.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_revwalk_reset(m_revwalk.get()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 }
 

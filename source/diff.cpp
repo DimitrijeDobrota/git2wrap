@@ -27,10 +27,11 @@ diff diff::tree_to_tree(const tree& old,
 {
   git_diff* dif = nullptr;
 
-  if (auto err = git_diff_tree_to_tree(
-          &dif, old.get_owner().get(), old.ptr(), crnt.ptr(), opts))
+  if (git_diff_tree_to_tree(
+          &dif, crnt.get_owner().get(), old.ptr(), crnt.ptr(), opts)
+      != 0)
   {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+    throw error<error_code_t::ERROR>();
   }
 
   return {dif, old.get_owner()};
@@ -45,8 +46,8 @@ diff_stats diff::get_stats() const
 {
   git_diff_stats* stats = nullptr;
 
-  if (auto err = git_diff_get_stats(&stats, m_diff.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_diff_get_stats(&stats, m_diff.get()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 
   return diff_stats(stats);

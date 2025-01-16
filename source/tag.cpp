@@ -14,11 +14,7 @@ tag::tag(git_tag* tagg, repositoryPtr repo)
 tag tag::dup() const
 {
   git_tag* tagg = nullptr;
-
-  if (auto err = git_tag_dup(&tagg, m_tag.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
-  }
-
+  git_tag_dup(&tagg, m_tag.get());
   return {tagg, m_repo};
 }
 

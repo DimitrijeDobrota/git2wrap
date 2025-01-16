@@ -16,11 +16,7 @@ commit::commit(git_commit* cmt, repositoryPtr repo)
 commit commit::dup() const
 {
   git_commit* cmt = nullptr;
-
-  if (auto err = git_commit_dup(&cmt, m_commit.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
-  }
-
+  git_commit_dup(&cmt, m_commit.get());
   return {cmt, m_repo};
 }
 
@@ -88,8 +84,8 @@ commit commit::get_parent(unsigned n) const
 {
   git_commit* cmt = nullptr;
 
-  if (auto err = git_commit_parent(&cmt, m_commit.get(), n)) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_commit_parent(&cmt, m_commit.get(), n) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 
   return {cmt, m_repo};
@@ -99,8 +95,13 @@ buf commit::get_header_field(const char* field) const
 {
   buf bufr;
 
-  if (auto err = git_commit_header_field(bufr.get(), m_commit.get(), field)) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  switch (git_commit_header_field(bufr.get(), m_commit.get(), field)) {
+    case error_code_t::OK:
+      break;
+    case error_code_t::ENOTFOUND:
+      throw error<error_code_t::ENOTFOUND>();
+    default:
+      throw error<error_code_t::ERROR>();
   }
 
   return bufr;
@@ -110,8 +111,8 @@ tree commit::get_tree() const
 {
   git_tree* tre = nullptr;
 
-  if (auto err = git_commit_tree(&tre, m_commit.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_commit_tree(&tre, m_commit.get()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 
   return {tre, m_repo};

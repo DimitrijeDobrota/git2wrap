@@ -1,7 +1,5 @@
 #include "git2wrap/blob.hpp"
 
-#include "git2wrap/error.hpp"
-
 namespace git2wrap
 {
 
@@ -14,11 +12,7 @@ blob::blob(git_blob* blb, repositoryPtr repo)
 blob blob::dup() const
 {
   git_blob* blb = nullptr;
-
-  if (auto err = git_blob_dup(&blb, m_blob.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
-  }
-
+  git_blob_dup(&blb, m_blob.get());
   return {blb, m_repo};
 }
 

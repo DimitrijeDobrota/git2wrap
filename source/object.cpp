@@ -14,11 +14,7 @@ object::object(git_object* obj, repositoryPtr repo)
 object object::dup() const
 {
   git_object* obj = nullptr;
-
-  if (auto err = git_object_dup(&obj, m_obj.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
-  }
-
+  git_object_dup(&obj, m_obj.get());
   return {obj, m_repo};
 }
 
@@ -31,8 +27,8 @@ buf object::get_id_short() const
 {
   buf bufr;
 
-  if (auto err = git_object_short_id(bufr.get(), m_obj.get())) {
-    throw error(err, git_error_last(), __FILE__, __LINE__);
+  if (git_object_short_id(bufr.get(), m_obj.get()) != 0) {
+    throw error<error_code_t::ERROR>();
   }
 
   return bufr;

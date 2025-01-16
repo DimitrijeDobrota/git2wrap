@@ -11,11 +11,8 @@ int main()
 
     const libgit2 git;
 
-  } catch (const git2wrap::error& err) {
-    std::cerr << std::format("Error %d/%d: %s\n",
-                             err.get_error(),
-                             err.get_klass(),
-                             err.get_message());
+  } catch (const git2wrap::runtime_error& err) {
+    std::cerr << std::format("Error: %s\n", err.what());
   }
 
   return 0;
