@@ -14,6 +14,7 @@ a long way until full coverage.
 
 * CMake 3.14 or latter
 * Compiler with C++20 support (tested: clang 18.1.8, gcc 14.2.1)
+* [`libgit2 1.9`](https://github.com/libgit2/libgit2)
 
 
 ## Building and installing
