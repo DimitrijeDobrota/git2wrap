@@ -7,18 +7,20 @@ include(../cmake/folders.cmake)
 
 # ---- Dependencies ----
 
-if(PROJECT_IS_TOP_LEVEL)
-  find_package(git2wrap REQUIRED)
-  enable_testing()
-endif()
+find_package(Catch2 REQUIRED)
+include(Catch)
 
 # ---- Tests ----
 
-add_executable(git2wrap_test source/git2wrap_test.cpp)
-target_link_libraries(git2wrap_test PRIVATE git2wrap::git2wrap)
-target_compile_features(git2wrap_test PRIVATE cxx_std_20)
+function(add_test NAME)
+  add_executable("${NAME}" "source/${NAME}.cpp")
+  target_link_libraries("${NAME}" PRIVATE based::based)
+  target_link_libraries("${NAME}" PRIVATE Catch2::Catch2WithMain)
+  target_compile_features("${NAME}" PRIVATE cxx_std_20)
+  catch_discover_tests("${NAME}")
+endfunction()
 
-add_test(NAME git2wrap_test COMMAND git2wrap_test)
+add_test(git2wrap_test)
 
 # ---- End-of-file commands ----
 

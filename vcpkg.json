@@ -1,0 +1,23 @@
+{
+  "name": "hemplate",
+  "version-semver": "0.4.0",
+  "dependencies": [
+      {
+          "name": "libgit2",
+          "version>=": "1.9.0"
+      }
+  ],
+  "default-features": [],
+  "features": {
+    "test": {
+      "description": "Dependencies for testing",
+      "dependencies": [
+        {
+          "name": "catch2",
+          "version>=": "3.7.1"
+        }
+      ]
+    }
+  },
+  "builtin-baseline": "ce613c41372b23b1f51333815feb3edd87ef8a8b"
+}

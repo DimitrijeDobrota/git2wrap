@@ -13,8 +13,7 @@ a long way until full coverage.
 ## Dependencies
 
 * CMake 3.14 or latter
-* Compiler with C++20 support (tested: clang 18.1.8, gcc 14.2.1)
-* [`libgit2 1.9`](https://github.com/libgit2/libgit2)
+* Compiler with C++20 support (tested on gcc 14.2.1 and clang 19.1.7)
 
 
 ## Building and installing
@@ -24,7 +23,7 @@ See the [`BUILDING`](BUILDING.md) document.
 
 ## Usage
 
-> Please reference [startgit](https://github.com/DimitrijeDobrota/startgit) for relevant usage example
+> Please reference [startgit](https://github.com/DimitrijeDobrota/startgit) for relevant usage examples.
 
 
 ## Version History
@@ -42,10 +41,9 @@ See the [`BUILDING`](BUILDING.md) document.
 See the [`CONTRIBUTING`](CONTRIBUTING.md) document.
 
 
-# Licensing
+## License
 
-This project is licensed under the MIT License
-- see the [`LICENSE`](LICENSE.md) document for details
+This project is licensed under the MIT License - see the [`LICENSE`](LICENSE.md) file for details
 
 
 ## Acknowledgments
