@@ -1,7 +1,5 @@
 #include "git2wrap/reference.hpp"
 
-#include "git2wrap/error.hpp"
-
 namespace git2wrap
 {
 

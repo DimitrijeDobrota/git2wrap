@@ -6,10 +6,10 @@
 #include <git2.h>
 
 // NOLINTBEGIN
-#define CLASS(T) \
-  class T; \
-  using T##Del = std::function<void(git_##T*)>; \
-  using T##Ptr = std::shared_ptr<git_##T>; \
+#define CLASS(T)                                                               \
+  class T;                                                                     \
+  using T##Del = std::function<void(git_##T*)>;                                \
+  using T##Ptr = std::shared_ptr<git_##T>;                                     \
   using T##UPtr = std::unique_ptr<git_##T, T##Del>;
 // NOLINTEND
 
@@ -41,8 +41,6 @@ using object_t = git_object_t;
 using filemode_t = git_filemode_t;
 using off_t = git_off_t;
 using object_size_t = git_object_size_t;
-
-using diff_options = git_diff_options;
 
 using diff_binary_cb = git_diff_binary_cb;
 using diff_file_cb = git_diff_file_cb;

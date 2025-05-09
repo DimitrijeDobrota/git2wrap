@@ -3,23 +3,24 @@
 # misc-non-private-member-variables-in-classes: the options don't do anything
 # modernize-use-nodiscard: too aggressive, attribute is situationally useful
 Checks: "*,\
-  -google-readability-todo,\
   -altera-*,\
+  -boost*,\
+  -cppcoreguidelines-avoid-do-while,\
+  -cppcoreguidelines-pro-bounds-constant-array-index,\
   -fuchsia-*,\
-  fuchsia-multiple-inheritance,\
+  -google-readability-todo,\
   -llvm-header-guard,\
   -llvm-include-order,\
   -llvmlibc-*,\
-  -modernize-use-nodiscard,\
-  -modernize-use-trailing-return-type,\
-  -cppcoreguidelines-pro-type-vararg,\
-  -hicpp-vararg,\
   -misc-include-cleaner,\
-  -misc-non-private-member-variables-in-classes"
+  -misc-non-private-member-variables-in-classes,\
+  -misc-no-recursion,\
+  -modernize-use-trailing-return-type,\
+  -readability-suspicious-call-argument,\
+  -*-ranges,\
+"
 WarningsAsErrors: ''
 CheckOptions:
-  - key: 'misc-include-cleaner.IgnoreHeaders'
-    value: "git2.h"
   - key: 'bugprone-argument-comment.StrictMode'
     value: 'true'
 # Prefer using enum classes with 2 values for parameters instead of bools
@@ -79,7 +80,7 @@ CheckOptions:
   - key: 'readability-identifier-naming.EnumCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.EnumConstantCase'
-    value: 'UPPER_CASE'
+    value: 'lower_case'
   - key: 'readability-identifier-naming.FunctionCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.GlobalConstantCase'
@@ -133,7 +134,7 @@ CheckOptions:
   - key: 'readability-identifier-naming.PublicMethodCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.ScopedEnumConstantCase'
-    value: 'UPPER_CASE'
+    value: 'lower_case'
   - key: 'readability-identifier-naming.StaticConstantCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.StaticVariableCase'
@@ -146,6 +147,8 @@ CheckOptions:
     value: 'CamelCase'
   - key: 'readability-identifier-naming.TypeAliasCase'
     value: 'lower_case'
+  - key: 'readability-identifier-naming.TypeAliasIgnoredRegexp'
+    value: 'N'
   - key: 'readability-identifier-naming.TypedefCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.TypeTemplateParameterCase'
@@ -153,9 +156,21 @@ CheckOptions:
   - key: 'readability-identifier-naming.UnionCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.ValueTemplateParameterCase'
-    value: 'CamelCase'
+    value: 'lower_case'
   - key: 'readability-identifier-naming.VariableCase'
     value: 'lower_case'
   - key: 'readability-identifier-naming.VirtualMethodCase'
     value: 'lower_case'
+  - key: 'readability-identifier-length.IgnoredVariableNames'
+    value: "^[abcdxyznm]$"
+  - key: 'readability-identifier-length.IgnoredParameterNames'
+    value: "^[abcdxyznm]$"
+  - key: 'google-runtime-int.UnsignedTypePrefix'
+    value: "u"
+  - key: 'google-runtime-int.SignedTypePrefix'
+    value: "i"
+  - key: 'cppcoreguidelines-missing-std-forward.ForwardFunction'
+    value: "::based::forward"
+  - key: 'cppcoreguidelines-rvalue-reference-param-not-moved.MoveFunction'
+    value: "::based::move"
 ...

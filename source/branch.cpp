@@ -29,16 +29,17 @@ const std::string& branch::get_name()
   }
 
   const char* name = nullptr;
-  switch (git_branch_name(&name, m_ref.get())) {
-    case error_code_t::OK:
-      break;
-    case error_code_t::EINVALID:
-      throw error<error_code_t::EINVALID>();
-    default:
-      throw error<error_code_t::ERROR>();
+  const auto err = error_code_t(git_branch_name(&name, m_ref.get()));
+
+  if (err == error_code_t::ok) {
+    return m_name = name;
   }
 
-  return m_name = name;
+  if (err == error_code_t::einvalid) {
+    throw error<error_code_t::einvalid>();
+  }
+
+  throw error<error_code_t::error>();
 }
 
 branch_iterator::branch_iterator(git_branch_iterator* iter)
@@ -54,16 +55,13 @@ branch_iterator& branch_iterator::operator++()
   git_reference* ref = nullptr;
   git_branch_t type = {};
 
-  switch (git_branch_next(&ref, &type, get())) {
-    case error_code_t::OK:
-    case error_code_t::ITEROVER:
-      break;
-    default:
-      throw error<error_code_t::ERROR>();
+  const auto err = error_code_t(git_branch_next(&ref, &type, get()));
+  if (err == error_code_t::ok || err == error_code_t::iterover) {
+    m_branch = branch(ref, type);
+    return *this;
   }
 
-  m_branch = branch(ref, type);
-  return *this;
+  throw error<error_code_t::error>();
 }
 
 bool operator==(const branch_iterator& lhs, const branch_iterator& rhs)

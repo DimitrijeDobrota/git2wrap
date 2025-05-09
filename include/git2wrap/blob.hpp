@@ -3,8 +3,8 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
-#include "git2wrap/types.hpp"
 #include "git2wrap/oid.hpp"
+#include "git2wrap/types.hpp"
 
 namespace git2wrap
 {
@@ -15,13 +15,13 @@ public:
   blob(git_blob* blb, repositoryPtr repo);
 
   operator bool() const { return m_blob != nullptr; }  // NOLINT
-  blob dup() const;
+  [[nodiscard]] blob dup() const;
 
-  oid get_id() const;
-  repositoryPtr get_owner() const;
-  const void* get_rawcontent() const;
-  object_size_t get_rawsize() const;
-  bool is_binary() const;
+  [[nodiscard]] oid get_id() const;
+  [[nodiscard]] repositoryPtr get_owner() const;
+  [[nodiscard]] const void* get_rawcontent() const;
+  [[nodiscard]] object_size_t get_rawsize() const;
+  [[nodiscard]] bool is_binary() const;
 
 private:
   blobUPtr m_blob;

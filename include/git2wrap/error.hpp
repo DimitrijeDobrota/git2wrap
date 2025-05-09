@@ -10,158 +10,158 @@
 namespace git2wrap
 {
 
-enum error_code_t  // NOLINT
+enum class error_code_t  // NOLINT
 {
-  OK = GIT_OK,
-  ERROR = GIT_ERROR,
-  ENOTFOUND = GIT_ENOTFOUND,
-  EEXISTS = GIT_EEXISTS,
-  EAMBIGUOUS = GIT_EAMBIGUOUS,
-  EBUFS = GIT_EBUFS,
-  EUSER = GIT_EUSER,
-  EBAREREPO = GIT_EBAREREPO,
-  EUNBORNBRANCH = GIT_EUNBORNBRANCH,
-  EUNMERGED = GIT_EUNMERGED,
-  ENONFASTFORWARD = GIT_ENONFASTFORWARD,
-  EINVALIDSPEC = GIT_EINVALIDSPEC,
-  ECONFLICT = GIT_ECONFLICT,
-  ELOCKED = GIT_ELOCKED,
-  EMODIFIED = GIT_EMODIFIED,
-  EAUTH = GIT_EAUTH,
-  ECERTIFICATE = GIT_ECERTIFICATE,
-  EAPPLIED = GIT_EAPPLIED,
-  EPEEL = GIT_EPEEL,
-  EEOF = GIT_EEOF,
-  EINVALID = GIT_EINVALID,
-  EUNCOMMITTED = GIT_EUNCOMMITTED,
-  EDIRECTORY = GIT_EDIRECTORY,
-  EMERGECONFLICT = GIT_EMERGECONFLICT,
-  PASSTHROUGH = GIT_PASSTHROUGH,
-  ITEROVER = GIT_ITEROVER,
-  RETRY = GIT_RETRY,
-  EMISMATCH = GIT_EMISMATCH,
-  EINDEXDIRTY = GIT_EINDEXDIRTY,
-  EAPPLYFAIL = GIT_EAPPLYFAIL,
-  EOWNER = GIT_EOWNER,
-  TIMEOUT = GIT_TIMEOUT,
-  EUNCHANGED = GIT_EUNCHANGED,
-  ENOTSUPPORTED = GIT_ENOTSUPPORTED,
-  EREADONLY = GIT_EREADONLY,
+  ok = GIT_OK,
+  error = GIT_ERROR,
+  enotfound = GIT_ENOTFOUND,
+  eexists = GIT_EEXISTS,
+  eambiguous = GIT_EAMBIGUOUS,
+  ebufs = GIT_EBUFS,
+  euser = GIT_EUSER,
+  ebarerepo = GIT_EBAREREPO,
+  eunbornbranch = GIT_EUNBORNBRANCH,
+  eunmerged = GIT_EUNMERGED,
+  enonfastforward = GIT_ENONFASTFORWARD,
+  einvalidspec = GIT_EINVALIDSPEC,
+  econflict = GIT_ECONFLICT,
+  elocked = GIT_ELOCKED,
+  emodified = GIT_EMODIFIED,
+  eauth = GIT_EAUTH,
+  ecertificate = GIT_ECERTIFICATE,
+  eapplied = GIT_EAPPLIED,
+  epeel = GIT_EPEEL,
+  eeof = GIT_EEOF,
+  einvalid = GIT_EINVALID,
+  euncommitted = GIT_EUNCOMMITTED,
+  edirectory = GIT_EDIRECTORY,
+  emergeconflict = GIT_EMERGECONFLICT,
+  passthrough = GIT_PASSTHROUGH,
+  iterover = GIT_ITEROVER,
+  retry = GIT_RETRY,
+  emismatch = GIT_EMISMATCH,
+  eindexdirty = GIT_EINDEXDIRTY,
+  eapplyfail = GIT_EAPPLYFAIL,
+  eowner = GIT_EOWNER,
+  timeout = GIT_TIMEOUT,
+  eunchanged = GIT_EUNCHANGED,
+  enotsupported = GIT_ENOTSUPPORTED,
+  ereadonly = GIT_EREADONLY,
 };
 
-enum error_t  // NOLINT
+enum class error_t  // NOLINT
 {
-  NONE = GIT_ERROR_NONE,
-  NOMEMORY = GIT_ERROR_NOMEMORY,
-  OS = GIT_ERROR_OS,
-  INVALID = GIT_ERROR_INVALID,
-  REFERENCE = GIT_ERROR_REFERENCE,
-  ZLIB = GIT_ERROR_ZLIB,
-  REPOSITORY = GIT_ERROR_REPOSITORY,
-  CONFIG = GIT_ERROR_CONFIG,
-  REGEX = GIT_ERROR_REGEX,
-  ODB = GIT_ERROR_ODB,
-  INDEX = GIT_ERROR_INDEX,
-  OBJECT = GIT_ERROR_OBJECT,
-  NET = GIT_ERROR_NET,
-  TAG = GIT_ERROR_TAG,
-  TREE = GIT_ERROR_TREE,
-  INDEXER = GIT_ERROR_INDEXER,
-  SSL = GIT_ERROR_SSL,
-  SUBMODULE = GIT_ERROR_SUBMODULE,
-  THREAD = GIT_ERROR_THREAD,
-  STASH = GIT_ERROR_STASH,
-  CHECKOUT = GIT_ERROR_CHECKOUT,
-  FETCHHEAD = GIT_ERROR_FETCHHEAD,
-  MERGE = GIT_ERROR_MERGE,
-  SSH = GIT_ERROR_SSH,
-  FILTER = GIT_ERROR_FILTER,
-  REVERT = GIT_ERROR_REVERT,
-  CALLBACK = GIT_ERROR_CALLBACK,
-  CHERRYPICK = GIT_ERROR_CHERRYPICK,
-  DESCRIBE = GIT_ERROR_DESCRIBE,
-  REBASE = GIT_ERROR_REBASE,
-  FILESYSTEM = GIT_ERROR_FILESYSTEM,
-  PATCH = GIT_ERROR_PATCH,
-  WORKTREE = GIT_ERROR_WORKTREE,
-  SHA = GIT_ERROR_SHA,
-  HTTP = GIT_ERROR_HTTP,
-  INTERNAL = GIT_ERROR_INTERNAL,
-  GRAFTS = GIT_ERROR_GRAFTS,
+  none = GIT_ERROR_NONE,
+  nomemory = GIT_ERROR_NOMEMORY,
+  os = GIT_ERROR_OS,
+  invalid = GIT_ERROR_INVALID,
+  reference = GIT_ERROR_REFERENCE,
+  zlib = GIT_ERROR_ZLIB,
+  repository = GIT_ERROR_REPOSITORY,
+  config = GIT_ERROR_CONFIG,
+  regex = GIT_ERROR_REGEX,
+  odb = GIT_ERROR_ODB,
+  index = GIT_ERROR_INDEX,
+  object = GIT_ERROR_OBJECT,
+  net = GIT_ERROR_NET,
+  tag = GIT_ERROR_TAG,
+  tree = GIT_ERROR_TREE,
+  indexer = GIT_ERROR_INDEXER,
+  ssl = GIT_ERROR_SSL,
+  submodule = GIT_ERROR_SUBMODULE,
+  thread = GIT_ERROR_THREAD,
+  stash = GIT_ERROR_STASH,
+  checkout = GIT_ERROR_CHECKOUT,
+  fetchhead = GIT_ERROR_FETCHHEAD,
+  merge = GIT_ERROR_MERGE,
+  ssh = GIT_ERROR_SSH,
+  filter = GIT_ERROR_FILTER,
+  revert = GIT_ERROR_REVERT,
+  callback = GIT_ERROR_CALLBACK,
+  cherrypick = GIT_ERROR_CHERRYPICK,
+  describe = GIT_ERROR_DESCRIBE,
+  rebase = GIT_ERROR_REBASE,
+  filesystem = GIT_ERROR_FILESYSTEM,
+  patch = GIT_ERROR_PATCH,
+  worktree = GIT_ERROR_WORKTREE,
+  sha = GIT_ERROR_SHA,
+  http = GIT_ERROR_HTTP,
+  internal = GIT_ERROR_INTERNAL,
+  grafts = GIT_ERROR_GRAFTS,
 };
 
 static inline std::string error_get_message(error_code_t error)
 {
   switch (error) {
-    case error_code_t::OK:
+    case error_code_t::ok:
       return "No error occurred; the call was successful.";
-    case error_code_t::ERROR:
+    case error_code_t::error:
       return "An error occurred; call git_error_last for more information.";
-    case error_code_t::ENOTFOUND:
+    case error_code_t::enotfound:
       return "Requested object could not be found.";
-    case error_code_t::EEXISTS:
+    case error_code_t::eexists:
       return "Object exists preventing operation.";
-    case error_code_t::EAMBIGUOUS:
+    case error_code_t::eambiguous:
       return "More than one object matches.";
-    case error_code_t::EBUFS:
+    case error_code_t::ebufs:
       return "Output buffer too short to hold data.";
-    case error_code_t::EUSER:
+    case error_code_t::euser:
       return "callback generated";
-    case error_code_t::EBAREREPO:
+    case error_code_t::ebarerepo:
       return "Operation not allowed on bare repository.";
-    case error_code_t::EUNBORNBRANCH:
+    case error_code_t::eunbornbranch:
       return "HEAD refers to branch with no commits.";
-    case error_code_t::EUNMERGED:
+    case error_code_t::eunmerged:
       return "Merge in progress prevented operation";
-    case error_code_t::ENONFASTFORWARD:
+    case error_code_t::enonfastforward:
       return "Reference was not fast-forwardable";
-    case error_code_t::EINVALIDSPEC:
+    case error_code_t::einvalidspec:
       return "Name/ref spec was not in a valid format";
-    case error_code_t::ECONFLICT:
+    case error_code_t::econflict:
       return "Checkout conflicts prevented operation";
-    case error_code_t::ELOCKED:
+    case error_code_t::elocked:
       return "Lock file prevented operation";
-    case error_code_t::EMODIFIED:
+    case error_code_t::emodified:
       return "Reference value does not match expected";
-    case error_code_t::EAUTH:
+    case error_code_t::eauth:
       return "Authentication error";
-    case error_code_t::ECERTIFICATE:
+    case error_code_t::ecertificate:
       return "Server certificate is invalid";
-    case error_code_t::EAPPLIED:
+    case error_code_t::eapplied:
       return "Patch/merge has already been applied";
-    case error_code_t::EPEEL:
+    case error_code_t::epeel:
       return "The requested peel operation is not possible";
-    case error_code_t::EEOF:
+    case error_code_t::eeof:
       return "Unexpected EOF";
-    case error_code_t::EINVALID:
+    case error_code_t::einvalid:
       return "Invalid operation or input";
-    case error_code_t::EUNCOMMITTED:
+    case error_code_t::euncommitted:
       return "Uncommitted changes in index prevented operation";
-    case error_code_t::EDIRECTORY:
+    case error_code_t::edirectory:
       return "The operation is not valid for a directory";
-    case error_code_t::EMERGECONFLICT:
+    case error_code_t::emergeconflict:
       return "A merge conflict exists and cannot continue";
-    case error_code_t::PASSTHROUGH:
+    case error_code_t::passthrough:
       return "A user-configured callback refused to act";
-    case error_code_t::ITEROVER:
+    case error_code_t::iterover:
       return "Signals end of iteration with iterator";
-    case error_code_t::RETRY:
+    case error_code_t::retry:
       return "Internal only";
-    case error_code_t::EMISMATCH:
+    case error_code_t::emismatch:
       return "Hashsum mismatch in object";
-    case error_code_t::EINDEXDIRTY:
+    case error_code_t::eindexdirty:
       return "Unsaved changes in the index would be overwritten";
-    case error_code_t::EAPPLYFAIL:
+    case error_code_t::eapplyfail:
       return "Patch application failed";
-    case error_code_t::EOWNER:
+    case error_code_t::eowner:
       return "The object is not owned by the current user";
-    case error_code_t::TIMEOUT:
+    case error_code_t::timeout:
       return "The operation timed out";
-    case error_code_t::EUNCHANGED:
+    case error_code_t::eunchanged:
       return "There were no changes";
-    case error_code_t::ENOTSUPPORTED:
+    case error_code_t::enotsupported:
       return "An option is not supported";
-    case error_code_t::EREADONLY:
+    case error_code_t::ereadonly:
       return "The subject is read-only";
   }
 
@@ -177,12 +177,12 @@ public:
   }
 };
 
-template<error_code_t E>
+template<error_code_t e>
 class GIT2WRAP_EXPORT error : public runtime_error
 {
 public:
   explicit error()
-      : runtime_error(error_get_message(E))
+      : runtime_error(error_get_message(e))
   {
   }
 
@@ -190,7 +190,7 @@ private:
 };
 
 template<>
-class GIT2WRAP_EXPORT error<error_code_t::ERROR> : public runtime_error
+class GIT2WRAP_EXPORT error<error_code_t::error> : public runtime_error
 {
 public:
   explicit error()
@@ -199,7 +199,7 @@ public:
   {
   }
 
-  error_t get_error() const { return m_err; }
+  [[nodiscard]] error_t get_error() const { return m_err; }
 
 private:
   error_t m_err;

@@ -85,7 +85,7 @@ commit commit::get_parent(unsigned n) const
   git_commit* cmt = nullptr;
 
   if (git_commit_parent(&cmt, m_commit.get(), n) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return {cmt, m_repo};
@@ -95,16 +95,18 @@ buf commit::get_header_field(const char* field) const
 {
   buf bufr;
 
-  switch (git_commit_header_field(bufr.get(), m_commit.get(), field)) {
-    case error_code_t::OK:
-      break;
-    case error_code_t::ENOTFOUND:
-      throw error<error_code_t::ENOTFOUND>();
-    default:
-      throw error<error_code_t::ERROR>();
+  const auto err =
+      error_code_t(git_commit_header_field(bufr.get(), m_commit.get(), field));
+
+  if (err == error_code_t::ok) {
+    return bufr;
   }
 
-  return bufr;
+  if (err == error_code_t::enotfound) {
+    throw error<error_code_t::enotfound>();
+  }
+
+  throw error<error_code_t::error>();
 }
 
 tree commit::get_tree() const
@@ -112,7 +114,7 @@ tree commit::get_tree() const
   git_tree* tre = nullptr;
 
   if (git_commit_tree(&tre, m_commit.get()) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return {tre, m_repo};

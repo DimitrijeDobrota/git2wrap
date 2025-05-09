@@ -19,12 +19,12 @@ public:
   object() = default;
 
   operator bool() const { return m_obj != nullptr; }  // NOLINT
-  object dup() const;
+  [[nodiscard]] object dup() const;
 
-  oid get_id() const;
-  buf get_id_short() const;
-  object_t get_type() const;
-  repositoryPtr get_owner() const;
+  [[nodiscard]] oid get_id() const;
+  [[nodiscard]] buf get_id_short() const;
+  [[nodiscard]] object_t get_type() const;
+  [[nodiscard]] repositoryPtr get_owner() const;
 
   static const char* type2string(object_t type);
   static git_object_t string2type(const char* str);

@@ -8,7 +8,7 @@ namespace git2wrap
 libgit2::libgit2()
 {
   if (m_cinit = git_libgit2_init(); m_cinit < 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 }
 

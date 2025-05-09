@@ -14,9 +14,9 @@ public:
   explicit reference(git_reference* ref = nullptr);
 
   operator bool() const { return m_ref != nullptr; }  // NOLINT
-  reference dup() const;
+  [[nodiscard]] reference dup() const;
 
-  git_reference* get() const { return m_ref.get(); }
+  [[nodiscard]] git_reference* get() const { return m_ref.get(); }
 
   friend bool operator==(const reference& lhs, const reference& rhs);
   friend bool operator!=(const reference& lhs, const reference& rhs);

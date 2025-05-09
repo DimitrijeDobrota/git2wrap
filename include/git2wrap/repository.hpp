@@ -27,24 +27,24 @@ public:
 
   operator repositoryPtr() const { return m_repo; }  // NOLINT
   operator bool() const { return m_repo != nullptr; }  // NOLINT
-  repositoryPtr get() const { return m_repo; }
+  [[nodiscard]] repositoryPtr get() const { return m_repo; }
 
-  static repository clone(const char* url,
-                          const char* local_path,
-                          const clone_options* options);
+  static repository clone(
+      const char* url, const char* local_path, const clone_options* options
+  );
 
   static repository open(const char* path);
-  static repository open(const char* path,
-                         unsigned flags,
-                         const char* ceiling_dirs);
+  static repository open(
+      const char* path, unsigned flags, const char* ceiling_dirs
+  );
 
   object revparse(const char* spec) const;
-  commit commit_lookup(const oid& objid) const;
-  blob blob_lookup(const oid& objid) const;
-  tag tag_lookup(const oid& objid) const;
+  [[nodiscard]] commit commit_lookup(const oid& objid) const;
+  [[nodiscard]] blob blob_lookup(const oid& objid) const;
+  [[nodiscard]] tag tag_lookup(const oid& objid) const;
 
-  branch_iterator branch_begin(git_branch_t list_flags) const;
-  branch_iterator branch_end() const;
+  [[nodiscard]] branch_iterator branch_begin(git_branch_t list_flags) const;
+  [[nodiscard]] branch_iterator branch_end() const;
 
   void tag_foreach(tag_foreach_cb callback, void* payload) const;
 

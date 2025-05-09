@@ -14,7 +14,7 @@ public:
   explicit oid(const git_oid* objid);
 
   operator bool() const { return m_oid != nullptr; }  // NOLINT
-  git_oid* ptr() const { return m_oid.get(); }
+  [[nodiscard]] git_oid* ptr() const { return m_oid.get(); }
 
   std::string get_hex_string(size_t n);
 

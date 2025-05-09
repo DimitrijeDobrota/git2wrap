@@ -16,6 +16,7 @@ include(cmake/variables.cmake)
 # ---- Declare dependencies ----
 
 find_package(libgit2 1.9 CONFIG REQUIRED)
+find_package(based 0.1.2 CONFIG REQUIRED)
 
 # ---- Declare library ----
 
@@ -38,7 +39,7 @@ add_library(
 )
 add_library(git2wrap::git2wrap ALIAS git2wrap_git2wrap)
 
-target_link_libraries(git2wrap_git2wrap PUBLIC git2)
+target_link_libraries(git2wrap_git2wrap PUBLIC git2 based::based)
 
 include(GenerateExportHeader)
 generate_export_header(

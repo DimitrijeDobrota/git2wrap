@@ -18,7 +18,7 @@ public:
   ~buf();
 
   git_buf* get() { return &m_buf; }
-  const git_buf* get() const { return &m_buf; }
+  [[nodiscard]] const git_buf* get() const { return &m_buf; }
 
 private:
   git_buf m_buf = {nullptr, 0, 0};

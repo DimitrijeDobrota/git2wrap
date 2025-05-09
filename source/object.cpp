@@ -28,7 +28,7 @@ buf object::get_id_short() const
   buf bufr;
 
   if (git_object_short_id(bufr.get(), m_obj.get()) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return bufr;

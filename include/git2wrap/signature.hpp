@@ -15,11 +15,11 @@ public:
   explicit signature(git_signature* sig);
 
   operator bool() const { return m_sig != nullptr; }  // NOLINT
-  signature dup() const;
+  [[nodiscard]] signature dup() const;
 
-  const char* get_email() const { return m_sig->email; }
-  const char* get_name() const { return m_sig->name; }
-  time get_time() const { return m_sig->when; }
+  [[nodiscard]] const char* get_email() const { return m_sig->email; }
+  [[nodiscard]] const char* get_name() const { return m_sig->name; }
+  [[nodiscard]] time get_time() const { return m_sig->when; }
 
 private:
   signatureUPtr m_sig;

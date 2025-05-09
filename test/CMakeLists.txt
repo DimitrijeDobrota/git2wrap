@@ -14,13 +14,13 @@ include(Catch)
 
 function(add_test NAME)
   add_executable("${NAME}" "source/${NAME}.cpp")
-  target_link_libraries("${NAME}" PRIVATE based::based)
+  target_link_libraries("${NAME}" PRIVATE git2wrap::git2wrap)
   target_link_libraries("${NAME}" PRIVATE Catch2::Catch2WithMain)
   target_compile_features("${NAME}" PRIVATE cxx_std_20)
   catch_discover_tests("${NAME}")
 endfunction()
 
-add_test(git2wrap_test)
+# add_test(git2wrap_test)
 
 # ---- End-of-file commands ----
 

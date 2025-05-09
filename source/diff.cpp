@@ -11,27 +11,31 @@ diff::diff(git_diff* dif, repositoryPtr repo)
 {
 }
 
-int diff::foreach(diff_file_cb file_cb,
-                  diff_binary_cb binary_cb,
-                  diff_hunk_cb hunk_cb,
-                  diff_line_cb line_cb,
-                  void* payload) const
+int diff::foreach(
+    diff_file_cb file_cb,
+    diff_binary_cb binary_cb,
+    diff_hunk_cb hunk_cb,
+    diff_line_cb line_cb,
+    void* payload
+) const
 {
   return git_diff_foreach(
-      m_diff.get(), file_cb, binary_cb, hunk_cb, line_cb, payload);
+      m_diff.get(), file_cb, binary_cb, hunk_cb, line_cb, payload
+  );
 }
 
-diff diff::tree_to_tree(const tree& old,
-                        const tree& crnt,
-                        const git_diff_options* opts)
+diff diff::tree_to_tree(
+    const tree& old, const tree& crnt, const git_diff_options* opts
+)
 {
   git_diff* dif = nullptr;
 
   if (git_diff_tree_to_tree(
-          &dif, crnt.get_owner().get(), old.ptr(), crnt.ptr(), opts)
+          &dif, crnt.get_owner().get(), old.ptr(), crnt.ptr(), opts
+      )
       != 0)
   {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return {dif, old.get_owner()};
@@ -47,7 +51,7 @@ diff_stats diff::get_stats() const
   git_diff_stats* stats = nullptr;
 
   if (git_diff_get_stats(&stats, m_diff.get()) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return diff_stats(stats);

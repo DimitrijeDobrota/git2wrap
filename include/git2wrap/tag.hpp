@@ -16,15 +16,15 @@ public:
   tag(git_tag* tagg, repositoryPtr repo);
 
   operator bool() const { return m_tag != nullptr; }  // NOLINT
-  tag dup() const;
+  [[nodiscard]] tag dup() const;
 
-  oid get_id() const;
-  repositoryPtr get_owner() const;
-  oid get_target_id() const;
-  object_t get_target_type() const;
-  const char* get_name() const;
-  signature get_tagger() const;
-  const char* get_message() const;
+  [[nodiscard]] oid get_id() const;
+  [[nodiscard]] repositoryPtr get_owner() const;
+  [[nodiscard]] oid get_target_id() const;
+  [[nodiscard]] object_t get_target_type() const;
+  [[nodiscard]] const char* get_name() const;
+  [[nodiscard]] signature get_tagger() const;
+  [[nodiscard]] const char* get_message() const;
 
 private:
   tagUPtr m_tag;

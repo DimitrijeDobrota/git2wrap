@@ -15,17 +15,17 @@ public:
   tree(git_tree* tre, repositoryPtr repo);
 
   operator bool() const { return m_tree != nullptr; }  // NOLINT
-  git_tree* ptr() const { return m_tree.get(); }
-  tree dup() const;
+  [[nodiscard]] git_tree* ptr() const { return m_tree.get(); }
+  [[nodiscard]] tree dup() const;
 
-  oid get_id() const;
-  repositoryPtr get_owner() const;
-  size_t get_entrycount() const;
+  [[nodiscard]] oid get_id() const;
+  [[nodiscard]] repositoryPtr get_owner() const;
+  [[nodiscard]] size_t get_entrycount() const;
 
-  tree_entry get_entry(const char* name) const;
-  tree_entry get_entry(size_t idx) const;
-  tree_entry get_entry(const oid& objid) const;
-  tree_entry get_entry_path(const char* path) const;
+  [[nodiscard]] tree_entry get_entry(const char* name) const;
+  [[nodiscard]] tree_entry get_entry(size_t idx) const;
+  [[nodiscard]] tree_entry get_entry(const oid& objid) const;
+  [[nodiscard]] tree_entry get_entry_path(const char* path) const;
 
 private:
   treeUPtr m_tree;
@@ -39,17 +39,17 @@ public:
   tree_entry(git_tree_entry* entry, repositoryPtr repo);
 
   operator bool() const { return m_entry != nullptr; }  // NOLINT
-  tree_entry dup() const;
+  [[nodiscard]] tree_entry dup() const;
 
-  object to_object() const;
-  tree to_tree() const;
+  [[nodiscard]] object to_object() const;
+  [[nodiscard]] tree to_tree() const;
 
-  const char* get_name() const;
-  repositoryPtr get_owner() const;
-  oid get_id() const;
-  object_t get_type() const;
-  filemode_t get_filemode() const;
-  filemode_t get_filemode_raw() const;
+  [[nodiscard]] const char* get_name() const;
+  [[nodiscard]] repositoryPtr get_owner() const;
+  [[nodiscard]] oid get_id() const;
+  [[nodiscard]] object_t get_type() const;
+  [[nodiscard]] filemode_t get_filemode() const;
+  [[nodiscard]] filemode_t get_filemode_raw() const;
 
   auto operator<=>(const tree_entry& rhs);
 

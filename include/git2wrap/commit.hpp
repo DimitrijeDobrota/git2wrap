@@ -3,9 +3,9 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/oid.hpp"
 #include "git2wrap/tree.hpp"
 #include "git2wrap/types.hpp"
-#include "git2wrap/oid.hpp"
 
 namespace git2wrap
 {
@@ -17,24 +17,24 @@ public:
   commit() = default;
 
   operator bool() const { return m_commit != nullptr; }  // NOLINT
-  commit dup() const;
+  [[nodiscard]] commit dup() const;
 
-  oid get_id() const;
-  const char* get_summary() const;
-  const char* get_message_encoding() const;
-  const char* get_message() const;
-  const char* get_message_raw() const;
-  const char* get_body() const;
-  time_t get_time() const;
-  int get_time_offset() const;
-  signature get_signature() const;
-  signature get_author() const;
-  const char* get_raw_header() const;
-  unsigned get_parentcount() const;
-  commit get_parent(unsigned n = 0) const;
-  buf get_header_field(const char* field) const;
+  [[nodiscard]] oid get_id() const;
+  [[nodiscard]] const char* get_summary() const;
+  [[nodiscard]] const char* get_message_encoding() const;
+  [[nodiscard]] const char* get_message() const;
+  [[nodiscard]] const char* get_message_raw() const;
+  [[nodiscard]] const char* get_body() const;
+  [[nodiscard]] time_t get_time() const;
+  [[nodiscard]] int get_time_offset() const;
+  [[nodiscard]] signature get_signature() const;
+  [[nodiscard]] signature get_author() const;
+  [[nodiscard]] const char* get_raw_header() const;
+  [[nodiscard]] unsigned get_parentcount() const;
+  [[nodiscard]] commit get_parent(unsigned n = 0) const;
+  [[nodiscard]] buf get_header_field(const char* field) const;
 
-  tree get_tree() const;
+  [[nodiscard]] tree get_tree() const;
 
 private:
   commitUPtr m_commit;

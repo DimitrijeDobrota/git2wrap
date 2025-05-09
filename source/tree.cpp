@@ -54,17 +54,19 @@ tree_entry tree::get_entry_path(const char* path) const
 {
   git_tree_entry* entry = nullptr;
 
-  switch (git_tree_entry_bypath(&entry, m_tree.get(), path)) {
-    case error_code_t::OK:
-      break;
-    case error_code_t::ENOTFOUND:
-      throw error<error_code_t::ENOTFOUND>();
-    default:
-      // should not happen
-      throw error<error_code_t::ERROR>();
+  const auto err =
+      error_code_t(git_tree_entry_bypath(&entry, m_tree.get(), path));
+
+  if (err == error_code_t::ok) {
+    return {entry, m_repo};
   }
 
-  return {entry, m_repo};
+  if (err == error_code_t::enotfound) {
+    throw error<error_code_t::enotfound>();
+  }
+
+  // should not happen
+  throw error<error_code_t::error>();
 }
 
 tree_entry::tree_entry(const git_tree_entry* entry, repositoryPtr repo)
@@ -84,7 +86,7 @@ tree_entry tree_entry::dup() const
   git_tree_entry* entry = nullptr;
 
   if (git_tree_entry_dup(&entry, m_entry.get()) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return {entry, m_repo};
@@ -95,7 +97,7 @@ object tree_entry::to_object() const
   git_object* obj = nullptr;
 
   if (git_tree_entry_to_object(&obj, m_repo.get(), m_entry.get()) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return {obj, m_repo};
@@ -106,7 +108,7 @@ tree tree_entry::to_tree() const
   git_object* obj = nullptr;
 
   if (git_tree_entry_to_object(&obj, m_repo.get(), m_entry.get()) != 0) {
-    throw error<error_code_t::ERROR>();
+    throw error<error_code_t::error>();
   }
 
   return {reinterpret_cast<git_tree*>(obj), m_repo};  // NOLINT
