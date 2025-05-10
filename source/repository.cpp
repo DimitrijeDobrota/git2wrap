@@ -64,13 +64,14 @@ repository repository::open(const char* path)
 }
 
 repository repository::open(
-    const char* path, unsigned flags, const char* ceiling_dirs
+    const char* path, flags_open::type flags, const char* ceiling_dirs
 )
 {
   git_repository* repo = nullptr;
 
-  const auto err =
-      error_code_t(git_repository_open_ext(&repo, path, flags, ceiling_dirs));
+  const auto err = error_code_t(
+      git_repository_open_ext(&repo, path, flags.value, ceiling_dirs)
+  );
 
   if (err == error_code_t::ok) {
     return repository(repo);
@@ -145,11 +146,13 @@ branch_iterator repository::branch_end() const  // NOLINT
   return branch_iterator();
 }
 
-branch_iterator repository::branch_begin(git_branch_t list_flags) const
+branch_iterator repository::branch_begin(branch::flags_list::type flags) const
 {
   git_branch_iterator* iter = nullptr;
 
-  if (git_branch_iterator_new(&iter, m_repo.get(), list_flags) != 0) {
+  if (git_branch_iterator_new(&iter, m_repo.get(), git_branch_t(flags.value))
+      != 0)
+  {
     throw error<error_code_t::error>();
   }
 

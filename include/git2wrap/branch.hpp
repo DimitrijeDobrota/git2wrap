@@ -1,5 +1,7 @@
 #pragma once
 
+#include <based/enum/enum_flag.hpp>
+#include <based/types/types.hpp>
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
@@ -17,6 +19,8 @@ public:
   );
   branch(reference ref, git_branch_t type);
 
+  BASED_DECLARE_ENUM_FLAG(flags_list, based::u8, local, remote, all)
+
   operator bool() const { return m_ref; }  // NOLINT
   [[nodiscard]] branch dup() const;
 
@@ -30,6 +34,8 @@ private:
 
   std::string m_name;
 };
+
+BASED_DEFINE_ENUM_FLAG_CLASS(branch, flags_list, based::u8, local, remote, all)
 
 class branch_iterator
 {

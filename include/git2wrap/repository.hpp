@@ -1,5 +1,7 @@
 #pragma once
 
+#include <based/enum/enum_flag.hpp>
+#include <based/types/types.hpp>
 #include <git2.h>
 
 #include "git2wrap/blob.hpp"
@@ -20,6 +22,10 @@ public:
   using init_options = git_repository_init_options;
   using clone_options = git_clone_options;
 
+  BASED_DECLARE_ENUM_FLAG(
+      flags_open, based::u8, no_search, cross_fs, bare, no_dotgit, from_env
+  )
+
   explicit repository(git_repository* repo);
   explicit repository(repositoryPtr repo);
   repository(const char* path, unsigned is_bare);
@@ -35,7 +41,7 @@ public:
 
   static repository open(const char* path);
   static repository open(
-      const char* path, unsigned flags, const char* ceiling_dirs
+      const char* path, flags_open::type flags, const char* ceiling_dirs
   );
 
   object revparse(const char* spec) const;
@@ -43,7 +49,7 @@ public:
   [[nodiscard]] blob blob_lookup(const oid& objid) const;
   [[nodiscard]] tag tag_lookup(const oid& objid) const;
 
-  [[nodiscard]] branch_iterator branch_begin(git_branch_t list_flags) const;
+  [[nodiscard]] branch_iterator branch_begin(branch::flags_list::type flags) const;
   [[nodiscard]] branch_iterator branch_end() const;
 
   void tag_foreach(tag_foreach_cb callback, void* payload) const;
@@ -51,5 +57,16 @@ public:
 private:
   repositoryPtr m_repo;
 };
+
+BASED_DEFINE_ENUM_FLAG_CLASS(
+    repository,
+    flags_open,
+    based::u8,
+    no_search,
+    cross_fs,
+    bare,
+    no_dotgit,
+    from_env
+)
 
 }  // namespace git2wrap

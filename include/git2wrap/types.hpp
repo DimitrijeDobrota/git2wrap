@@ -3,7 +3,6 @@
 #include <functional>
 #include <memory>
 
-#include <based/enum/enum.hpp>
 #include <git2.h>
 
 // NOLINTBEGIN

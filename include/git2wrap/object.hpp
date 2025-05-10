@@ -1,5 +1,6 @@
 #pragma once
 
+#include <based/enum/enum.hpp>
 #include <git2.h>
 
 #include "git2wrap/buf.hpp"
