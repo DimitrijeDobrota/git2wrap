@@ -33,9 +33,9 @@ oid tag::get_target_id() const
   return oid(git_tag_target_id(m_tag.get()));
 }
 
-object_t tag::get_target_type() const
+object::object_t tag::get_target_type() const
 {
-  return git_tag_target_type(m_tag.get());
+  return object::object_t::get(git_tag_target_type(m_tag.get()));
 }
 
 const char* tag::get_name() const

@@ -40,17 +40,94 @@ private:
 class GIT2WRAP_EXPORT diff_options
 {
 public:
-  explicit diff_options(unsigned int version)
+  explicit diff_options()
   {
-    git_diff_options_init(&m_options, version);
+    git_diff_options_init(&m_options, GIT_DIFF_OPTIONS_VERSION);
   }
 
   operator auto() { return &m_options; }  // NOLINT(*explicit*)
   operator auto() const { return &m_options; }  // NOLINT(*explicit*)
 
+  BASED_DECLARE_ENUM_FLAG(
+      flag,
+      based::u32,
+      normal,
+      reverse,
+      include_ignored,
+      recurse_ignored_dirs,
+      include_untracked,
+      recurse_untracked_dirs,
+      include_unmodified,
+      include_typechange,
+      include_typechange_trees,
+      ignore_filemode,
+      ignore_submodules,
+      ignore_case,
+      include_casechange,
+      disable_pathspec_match,
+      skip_binary_check,
+      enable_fast_untracked_dirs,
+      update_index,
+      include_unreadable,
+      include_unreadable_as_untracked,
+      indent_heuristic,
+      ignore_blank_lines,
+      force_text,
+      force_binary,
+      ignore_whitespace,
+      ignore_whitespace_change,
+      ignore_whitespace_eol,
+      show_untracked_content,
+      show_unmodified,
+      flag_unused,
+      patience,
+      minimal,
+      show_binary
+  )
+
+  auto flags() { return based::enum_flag_wrapper<flag::type>(m_options.flags); }
+
 private:
   git_diff_options m_options = {};
 };
+
+BASED_DEFINE_ENUM_FLAG_CLASS(
+    diff_options,
+    flag,
+    based::u32,
+    normal,
+    reverse,
+    include_ignored,
+    recurse_ignored_dirs,
+    include_untracked,
+    recurse_untracked_dirs,
+    include_unmodified,
+    include_typechange,
+    include_typechange_trees,
+    ignore_filemode,
+    ignore_submodules,
+    ignore_case,
+    include_casechange,
+    disable_pathspec_match,
+    skip_binary_check,
+    enable_fast_untracked_dirs,
+    update_index,
+    include_unreadable,
+    include_unreadable_as_untracked,
+    indent_heuristic,
+    ignore_blank_lines,
+    force_text,
+    force_binary,
+    ignore_whitespace,
+    ignore_whitespace_change,
+    ignore_whitespace_eol,
+    show_untracked_content,
+    show_unmodified,
+    flag_unused,
+    patience,
+    minimal,
+    show_binary
+)
 
 class GIT2WRAP_EXPORT diff_stats
 {

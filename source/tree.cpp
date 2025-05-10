@@ -129,9 +129,9 @@ repositoryPtr tree_entry::get_owner() const
   return m_repo;
 }
 
-object_t tree_entry::get_type() const
+object::object_t tree_entry::get_type() const
 {
-  return git_tree_entry_type(m_entry.get());
+  return object::object_t::get(git_tree_entry_type(m_entry.get()));
 }
 
 filemode_t tree_entry::get_filemode() const

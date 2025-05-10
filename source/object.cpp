@@ -36,7 +36,7 @@ buf object::get_id_short() const
 
 object::object_t object::get_type() const
 {
-  return git_object_type(m_obj.get());
+  return object_t::get(git_object_type(m_obj.get()));
 }
 
 repositoryPtr object::get_owner() const
@@ -46,12 +46,12 @@ repositoryPtr object::get_owner() const
 
 const char* object::type2string(object_t type)
 {
-  return git_object_type2string(type);
+  return git_object_type2string(git_object_t(type.value));
 }
 
 object::object_t object::string2type(const char* str)
 {
-  return git_object_string2type(str);
+  return object_t::get(git_object_string2type(str));
 }
 
 }  // namespace git2wrap

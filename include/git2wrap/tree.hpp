@@ -3,6 +3,7 @@
 #include <git2.h>
 
 #include "git2wrap/git2wrap_export.hpp"
+#include "git2wrap/object.hpp"
 #include "git2wrap/oid.hpp"
 #include "git2wrap/types.hpp"
 
@@ -47,7 +48,7 @@ public:
   [[nodiscard]] const char* get_name() const;
   [[nodiscard]] repositoryPtr get_owner() const;
   [[nodiscard]] oid get_id() const;
-  [[nodiscard]] object_t get_type() const;
+  [[nodiscard]] object::object_t get_type() const;
   [[nodiscard]] filemode_t get_filemode() const;
   [[nodiscard]] filemode_t get_filemode_raw() const;
 
