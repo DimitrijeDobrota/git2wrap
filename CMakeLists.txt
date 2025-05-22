@@ -16,7 +16,7 @@ include(cmake/variables.cmake)
 # ---- Declare dependencies ----
 
 find_package(libgit2 1.9 CONFIG REQUIRED)
-find_package(based 0.1.2 CONFIG REQUIRED)
+find_package(based 0.2.0 CONFIG REQUIRED)
 
 # ---- Declare library ----
 

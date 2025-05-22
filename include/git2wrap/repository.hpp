@@ -16,15 +16,15 @@
 namespace git2wrap
 {
 
+#define ENUM_OPEN empty, no_search, cross_fs, bare, no_dotgit, from_env
+
 class GIT2WRAP_EXPORT repository
 {
 public:
   using init_options = git_repository_init_options;
   using clone_options = git_clone_options;
 
-  BASED_DECLARE_ENUM_FLAG(
-      flags_open, based::u8, no_search, cross_fs, bare, no_dotgit, from_env
-  )
+  BASED_DECLARE_ENUM_FLAG(flags_open, based::bu8, ENUM_OPEN)
 
   explicit repository(git_repository* repo);
   explicit repository(repositoryPtr repo);
@@ -41,7 +41,7 @@ public:
 
   static repository open(const char* path);
   static repository open(
-      const char* path, flags_open::type flags, const char* ceiling_dirs
+      const char* path, flags_open::enum_type flags, const char* ceiling_dirs
   );
 
   object revparse(const char* spec) const;
@@ -49,7 +49,8 @@ public:
   [[nodiscard]] blob blob_lookup(const oid& objid) const;
   [[nodiscard]] tag tag_lookup(const oid& objid) const;
 
-  [[nodiscard]] branch_iterator branch_begin(branch::flags_list::type flags) const;
+  [[nodiscard]] branch_iterator branch_begin(branch::flags_list::enum_type flags
+  ) const;
   [[nodiscard]] branch_iterator branch_end() const;
 
   void tag_foreach(tag_foreach_cb callback, void* payload) const;
@@ -58,15 +59,8 @@ private:
   repositoryPtr m_repo;
 };
 
-BASED_DEFINE_ENUM_FLAG_CLASS(
-    repository,
-    flags_open,
-    based::u8,
-    no_search,
-    cross_fs,
-    bare,
-    no_dotgit,
-    from_env
-)
+BASED_DEFINE_ENUM_FLAG_CLASS(repository, flags_open, based::bu8, ENUM_OPEN)
+
+#undef ENUM_OPEN
 
 }  // namespace git2wrap

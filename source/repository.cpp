@@ -64,7 +64,7 @@ repository repository::open(const char* path)
 }
 
 repository repository::open(
-    const char* path, flags_open::type flags, const char* ceiling_dirs
+    const char* path, flags_open::enum_type flags, const char* ceiling_dirs
 )
 {
   git_repository* repo = nullptr;
@@ -146,7 +146,8 @@ branch_iterator repository::branch_end() const  // NOLINT
   return branch_iterator();
 }
 
-branch_iterator repository::branch_begin(branch::flags_list::type flags) const
+branch_iterator repository::branch_begin(branch::flags_list::enum_type flags
+) const
 {
   git_branch_iterator* iter = nullptr;
 

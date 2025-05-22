@@ -1,6 +1,6 @@
 #pragma once
 
-#include <based/enum/enum_flag.hpp>
+#include <based/enum/enum.hpp>
 #include <based/types/types.hpp>
 #include <git2.h>
 
@@ -11,6 +11,8 @@
 namespace git2wrap
 {
 
+#define ENUM_LIST local, remote, all
+
 class GIT2WRAP_EXPORT branch
 {
 public:
@@ -19,7 +21,7 @@ public:
   );
   branch(reference ref, git_branch_t type);
 
-  BASED_DECLARE_ENUM_FLAG(flags_list, based::u8, local, remote, all)
+  BASED_DECLARE_ENUM(flags_list, based::bu8, 1, ENUM_LIST)
 
   operator bool() const { return m_ref; }  // NOLINT
   [[nodiscard]] branch dup() const;
@@ -35,7 +37,7 @@ private:
   std::string m_name;
 };
 
-BASED_DEFINE_ENUM_FLAG_CLASS(branch, flags_list, based::u8, local, remote, all)
+BASED_DEFINE_ENUM_CLASS(branch, flags_list, based::bu8, 1, ENUM_LIST)
 
 class branch_iterator
 {

@@ -24,7 +24,7 @@ public:
       object_type, int, -2, any, invalid, commit, unused, tree, blob, tag
   )
 
-  using object_t = object_type::type;
+  using object_t = object_type::enum_type;
 
   [[nodiscard]] oid get_id() const;
   [[nodiscard]] buf get_id_short() const;

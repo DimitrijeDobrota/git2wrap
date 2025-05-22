@@ -50,7 +50,7 @@ public:
 
   BASED_DECLARE_ENUM_FLAG(
       flag,
-      based::u32,
+      based::bu32,
       normal,
       reverse,
       include_ignored,
@@ -85,7 +85,10 @@ public:
       show_binary
   )
 
-  auto flags() { return based::enum_flag_wrapper<flag::type>(m_options.flags); }
+  auto flags()
+  {
+    return based::enum_flag_wrapper<flag::enum_type>(m_options.flags);
+  }
 
 private:
   git_diff_options m_options = {};
@@ -94,7 +97,7 @@ private:
 BASED_DEFINE_ENUM_FLAG_CLASS(
     diff_options,
     flag,
-    based::u32,
+    based::bu32,
     normal,
     reverse,
     include_ignored,
