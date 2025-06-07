@@ -1,6 +1,6 @@
 {
-  "name": "hemplate",
-  "version-semver": "0.4.0",
+  "name": "git2wrap",
+  "version-semver": "0.3.0",
   "dependencies": [
       {
           "name": "libgit2",
@@ -16,10 +16,6 @@
     "test": {
       "description": "Dependencies for testing",
       "dependencies": [
-        {
-          "name": "catch2",
-          "version>=": "3.7.1"
-        }
       ]
     }
   },

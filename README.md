@@ -28,10 +28,13 @@ See the [`BUILDING`](BUILDING.md) document.
 
 ## Version History
 
-- 0.2
+* 0.3
+    * vcpkg support
+    * more and better enums
+* 0.2
     * Working with repository, branches, commits and diffs
     * Implement exception mechanism around error codes
-- 0.1
+* 0.1
     * Initial development phase
     * Heavy exploration
 
